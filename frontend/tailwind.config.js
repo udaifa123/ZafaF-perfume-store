@@ -1,0 +1,20 @@
+// module.exports = {
+//   purge: [],
+//   darkMode: false, 
+//   theme: {
+//     extend: {},
+//   },
+//   variants: {
+//     extend: {},
+//   },
+//   plugins: [],
+// }
+
+
+export default {
+  content: ["./index.html", "./src/**/*.{js,jsx}"],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};

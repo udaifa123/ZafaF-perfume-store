@@ -1,10 +1,25 @@
-version: "3"
+# version: "3"
+
+# services:
+#   frontend:
+#     build: ./frontend
+#     ports:
+#       - "5173:5173"
+#     depends_on:
+#       - backend
+
+#   backend:
+#     build: ./backend
+#     ports:
+#       - "5000:5000"
+
+
 
 services:
   frontend:
     build: ./frontend
     ports:
-      - "5173:5173"
+      - "3000:80"
     depends_on:
       - backend
 
@@ -12,3 +27,5 @@ services:
     build: ./backend
     ports:
       - "5000:5000"
+    env_file:
+      - ./backend/.env   

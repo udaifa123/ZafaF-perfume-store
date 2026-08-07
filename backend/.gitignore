@@ -1,4 +1,8 @@
-node_modules
+node_modules/
 .env
+dist/
+build/
 uploads/
-dist
+Dockerfile*
+docker-compose.yml
+*.log

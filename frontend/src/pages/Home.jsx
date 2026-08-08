@@ -284,31 +284,35 @@ const [activeSeason, setActiveSeason] = useState(0);
     }
   ];
 
-  // ✅ MOVED useEffect HERE - right after seasons array
-  useEffect(() => {
-    const testimonialInterval = setInterval(() => {
-      setTestimonialIndex(prev => (prev + 1) % testimonials.length);
-    }, 5000);
+ useEffect(() => {
+  const testimonialInterval = setInterval(() => {
+    setTestimonialIndex(prev => (prev + 1) % testimonials.length);
+  }, 5000);
 
-    const saleInterval = setInterval(() => {
-      setActiveSale(prev => (prev + 1) % saleItems.length);
-    }, 4000);
+  const saleInterval = setInterval(() => {
+    setActiveSale(prev => (prev + 1) % saleItems.length);
+  }, 4000);
 
-    const galleryInterval = setInterval(() => {
-      setActiveImageIndex(prev => (prev + 1) % galleryImages.length);
-    }, 3000);
+  const galleryInterval = setInterval(() => {
+    setActiveImageIndex(prev => (prev + 1) % galleryImages.length);
+  }, 3000);
 
-    const seasonInterval = setInterval(() => {
-      setActiveSeason(prev => (prev + 1) % seasons.length);
-    }, 7000);
+  const seasonInterval = setInterval(() => {
+    setActiveSeason(prev => (prev + 1) % seasons.length);
+  }, 7000);
 
-    return () => {
-      clearInterval(testimonialInterval);
-      clearInterval(saleInterval);
-      clearInterval(galleryInterval);
-      clearInterval(seasonInterval);
-    };
-  }, []); // ✅ Empty dependency array
+  return () => {
+    clearInterval(testimonialInterval);
+    clearInterval(saleInterval);
+    clearInterval(galleryInterval);
+    clearInterval(seasonInterval);
+  };
+}, [
+  testimonials.length,
+  saleItems.length,
+  galleryImages.length,
+  seasons.length
+]);
 
   const newsletterSubmit = (e) => {
     e.preventDefault();

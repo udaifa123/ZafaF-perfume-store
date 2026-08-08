@@ -34,38 +34,6 @@ const [activeSeason, setActiveSeason] = useState(0);
     navigate('/products');
   };
 
-useEffect(() => {
-
-  const testimonialInterval = setInterval(() => {
-    setTestimonialIndex(prev => (prev + 1) % testimonials.length);
-  }, 5000);
-
-  const saleInterval = setInterval(() => {
-    setActiveSale(prev => (prev + 1) % saleItems.length);
-  }, 4000);
-
-  const galleryInterval = setInterval(() => {
-    setActiveImageIndex(prev => (prev + 1) % galleryImages.length);
-  }, 3000);
-
-  const seasonInterval = setInterval(() => {
-    setActiveSeason(prev => (prev + 1) % seasons.length);
-  }, 7000);
-
-  return () => {
-    clearInterval(testimonialInterval);
-    clearInterval(saleInterval);
-    clearInterval(galleryInterval);
-    clearInterval(seasonInterval);
-  };
-
-}, [
-  testimonials.length,
-  saleItems.length,
-  galleryImages.length,
-  seasons.length
-]);
-
   const fragrances = [
     { 
       name: "Velvet Noir", 
@@ -245,7 +213,8 @@ useEffect(() => {
       role: "Fashion Influencer", 
       content: "ZafaF perfumes transformed my entire scent wardrobe. The quality is unmatched and the longevity is incredible!", 
       rating: 5,
-      purchase: "Velvet Noir"
+      purchase: "Velvet Noir",
+      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop&q=80"
     },
     { 
       name: "Rohan Mehta", 
@@ -314,6 +283,32 @@ useEffect(() => {
       description: "Woody & Warm Accords"
     }
   ];
+
+  // ✅ MOVED useEffect HERE - right after seasons array
+  useEffect(() => {
+    const testimonialInterval = setInterval(() => {
+      setTestimonialIndex(prev => (prev + 1) % testimonials.length);
+    }, 5000);
+
+    const saleInterval = setInterval(() => {
+      setActiveSale(prev => (prev + 1) % saleItems.length);
+    }, 4000);
+
+    const galleryInterval = setInterval(() => {
+      setActiveImageIndex(prev => (prev + 1) % galleryImages.length);
+    }, 3000);
+
+    const seasonInterval = setInterval(() => {
+      setActiveSeason(prev => (prev + 1) % seasons.length);
+    }, 7000);
+
+    return () => {
+      clearInterval(testimonialInterval);
+      clearInterval(saleInterval);
+      clearInterval(galleryInterval);
+      clearInterval(seasonInterval);
+    };
+  }, []); // ✅ Empty dependency array
 
   const newsletterSubmit = (e) => {
     e.preventDefault();
@@ -424,9 +419,6 @@ useEffect(() => {
                   <div className="absolute top-6 right-6 bg-gray-500 to-orange-500 text-white rounded-full px-4 py-2 shadow-lg animate-pulse">
                     <span className="text-sm font-bold">Best Seller</span>
                   </div>
-                  
-                 
-               
                 </div>
                 
                 <div className="absolute -top-6 -left-6 w-24 h-24 bg-gradient-to-br from-amber-300/30 to-orange-300/30 rounded-full blur-xl" />
@@ -506,14 +498,10 @@ useEffect(() => {
                   </div>
                 </div>
                 
-              
-                
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
             ))}
           </div>
-
-         
         </div>
       </section>
 
@@ -532,101 +520,99 @@ useEffect(() => {
               Discover our handpicked selection of exceptional fragrances, each telling its own story
             </p>
           </div>
-<div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-  {fragrances.map((fragrance, idx) => (
-    <div 
-      key={idx} 
-      className="group relative bg-gradient-to-b from-white to-gray-50 rounded-3xl overflow-hidden shadow-lg hover:shadow-3xl transition-all duration-500 border border-gray-200 hover:border-gray-300"
-      onClick={handleNavigateToProducts}
-    >
-      <div className={`absolute inset-0 bg-gradient-to-br ${fragrance.color} opacity-5`} />
-      
-     
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            {fragrances.map((fragrance, idx) => (
+              <div 
+                key={idx} 
+                className="group relative bg-gradient-to-b from-white to-gray-50 rounded-3xl overflow-hidden shadow-lg hover:shadow-3xl transition-all duration-500 border border-gray-200 hover:border-gray-300"
+                onClick={handleNavigateToProducts}
+              >
+                <div className={`absolute inset-0 bg-gradient-to-br ${fragrance.color} opacity-5`} />
+                
+                <div className="relative h-72 overflow-hidden">
+                  <div className="absolute inset-4 rounded-2xl overflow-hidden">
+                    <img 
+                      src={fragrance.image} 
+                      alt={fragrance.name}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+                  </div>
+                  
+                  <div className="absolute top-4 left-4">
+                    <div className="bg-gradient-to-r from-amber-900 to-amber-700 text-white px-3 py-1.5 rounded-full flex items-center gap-1 shadow-lg">
+                      <span className="text-xs font-bold tracking-wider">PREMIUM</span>
+                    </div>
+                  </div>
+                  
+                  {fragrance.discount > 0 && (
+                    <div className="absolute top-4 right-4 bg-gradient-to-br from-red-600 to-rose-600 text-white px-4 py-2 rounded-xl shadow-lg transform -rotate-3">
+                      <div className="text-center">
+                        <div className="text-xs font-light">SAVE</div>
+                        <div className="text-lg font-black leading-none">{fragrance.discount}%</div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  <button className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white transform hover:scale-110">
+                    <div className="relative">
+                      <ShoppingBag className="w-5 h-5 text-amber-700" />
+                      <div className="absolute -top-1 -right-1 w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
+                    </div>
+                  </button>
+                </div>
 
-      <div className="relative h-72 overflow-hidden">
-        <div className="absolute inset-4 rounded-2xl overflow-hidden">
-          <img 
-            src={fragrance.image} 
-            alt={fragrance.name}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-        </div>
-        
-        <div className="absolute top-4 left-4">
-          <div className="bg-gradient-to-r from-amber-900 to-amber-700 text-white px-3 py-1.5 rounded-full flex items-center gap-1 shadow-lg">
-            <span className="text-xs font-bold tracking-wider">PREMIUM</span>
+                <div className="p-6 pt-8 relative">
+                  <div className="flex items-center justify-center gap-1 mb-6">
+                    {[1, 2, 3].map((dot) => (
+                      <div 
+                        key={dot} 
+                        className={`w-2 h-2 rounded-full ${fragrance.color} opacity-${20 + dot * 20}`}
+                      />
+                    ))}
+                  </div>
+                  
+                  <div className="text-center mb-4">
+                    <h3 className="font-serif text-2xl font-bold text-gray-900 mb-2 group-hover:text-amber-800 transition-colors">
+                      {fragrance.name}
+                    </h3>
+                    <p className="text-sm text-gray-500 italic font-light tracking-wider">{fragrance.note}</p>
+                  </div>
+                  
+                  <div className="flex flex-col items-center mb-6">
+                    <div className="flex items-baseline gap-2 mb-1">
+                      <span className="text-3xl font-black text-gray-900">{fragrance.price}</span>
+                      {fragrance.originalPrice && (
+                        <span className="text-sm text-gray-400 line-through">{fragrance.originalPrice}</span>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center justify-between pt-6 border-t border-gray-200">
+                    <div className="flex items-center gap-2">
+                      <div className="flex">
+                        {[...Array(5)].map((_, i) => (
+                          <Star 
+                            key={i} 
+                            className={`w-4 h-4 ${i < Math.floor(fragrance.rating) ? 'fill-amber-500 text-amber-500' : 'fill-gray-300 text-gray-300'}`}
+                          />
+                        ))}
+                      </div>
+                      <span className="text-sm font-semibold text-gray-700">{fragrance.rating}</span>
+                    </div>
+                    
+                    <button className="group relative overflow-hidden bg-gradient-to-r from-amber-800 to-amber-600 text-white px-5 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-2 transition-all hover:from-amber-700 hover:to-amber-500 shadow-md hover:shadow-lg">
+                      <span>Explore</span>
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      <div className="absolute inset-0 bg-white/10 -translate-x-full group-hover:translate-x-full transition-transform duration-300" />
+                    </button>
+                  </div>
+                </div>
+                
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+              </div>
+            ))}
           </div>
-        </div>
-        
-        {fragrance.discount > 0 && (
-          <div className="absolute top-4 right-4 bg-gradient-to-br from-red-600 to-rose-600 text-white px-4 py-2 rounded-xl shadow-lg transform -rotate-3">
-            <div className="text-center">
-              <div className="text-xs font-light">SAVE</div>
-              <div className="text-lg font-black leading-none">{fragrance.discount}%</div>
-            </div>
-          </div>
-        )}
-        
-        <button className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white transform hover:scale-110">
-          <div className="relative">
-            <ShoppingBag className="w-5 h-5 text-amber-700" />
-            <div className="absolute -top-1 -right-1 w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
-          </div>
-        </button>
-      </div>
-
-      <div className="p-6 pt-8 relative">
-        <div className="flex items-center justify-center gap-1 mb-6">
-          {[1, 2, 3].map((dot) => (
-            <div 
-              key={dot} 
-              className={`w-2 h-2 rounded-full ${fragrance.color} opacity-${20 + dot * 20}`}
-            />
-          ))}
-        </div>
-        
-        <div className="text-center mb-4">
-          <h3 className="font-serif text-2xl font-bold text-gray-900 mb-2 group-hover:text-amber-800 transition-colors">
-            {fragrance.name}
-          </h3>
-          <p className="text-sm text-gray-500 italic font-light tracking-wider">{fragrance.note}</p>
-        </div>
-        
-        <div className="flex flex-col items-center mb-6">
-          <div className="flex items-baseline gap-2 mb-1">
-            <span className="text-3xl font-black text-gray-900">{fragrance.price}</span>
-            {fragrance.originalPrice && (
-              <span className="text-sm text-gray-400 line-through">{fragrance.originalPrice}</span>
-            )}
-          </div>
-        </div>
-        
-        <div className="flex items-center justify-between pt-6 border-t border-gray-200">
-          <div className="flex items-center gap-2">
-            <div className="flex">
-              {[...Array(5)].map((_, i) => (
-                <Star 
-                  key={i} 
-                  className={`w-4 h-4 ${i < Math.floor(fragrance.rating) ? 'fill-amber-500 text-amber-500' : 'fill-gray-300 text-gray-300'}`}
-                />
-              ))}
-            </div>
-            <span className="text-sm font-semibold text-gray-700">{fragrance.rating}</span>
-          </div>
-          
-          <button className="group relative overflow-hidden bg-gradient-to-r from-amber-800 to-amber-600 text-white px-5 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-2 transition-all hover:from-amber-700 hover:to-amber-500 shadow-md hover:shadow-lg">
-            <span>Explore</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            <div className="absolute inset-0 bg-white/10 -translate-x-full group-hover:translate-x-full transition-transform duration-300" />
-          </button>
-        </div>
-      </div>
-      
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-    </div>
-  ))}
-</div>
 
           <div className="text-center mt-12">
             <button 
@@ -640,146 +626,142 @@ useEffect(() => {
         </div>
       </section>
 
-   
-<section className="py-20 bg-gradient-to-b from-white to-amber-50/20">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6">
-    <div className="text-center mb-16">
-      <h2 className="font-playfair text-4xl md:text-5xl mb-6">
-        Experience <span className="gradient-text">Luxury</span>
-      </h2>
-      <p className="font-inter text-gray-600 text-lg max-w-2xl mx-auto">
-        Immerse yourself in the world of fine fragrances and artisanal craftsmanship
-      </p>
-    </div>
-
-    <div className="relative h-[400px] md:h-[500px] rounded-3xl overflow-hidden shadow-2xl mb-8">
-      <img 
-        src={galleryImages[activeImageIndex].url} 
-        alt={galleryImages[activeImageIndex].title}
-        className="w-full h-full object-cover transition-all "
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent">
-        <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
-          <h3 className="text-3xl md:text-4xl font-playfair font-bold text-white mb-3">
-            {galleryImages[activeImageIndex].title}
-          </h3>
-          <p className="text-amber-100/90 text-lg max-w-2xl">
-            {galleryImages[activeImageIndex].description}
-          </p>
-        </div>
-      </div>
-      
-      <button 
-        onClick={() => setActiveImageIndex((prev) => prev === 0 ? galleryImages.length - 1 : prev - 1)}
-        className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
-      >
-        <ArrowRight className="w-6 h-6 text-white rotate-180" />
-      </button>
-      <button 
-        onClick={() => setActiveImageIndex((prev) => (prev + 1) % galleryImages.length)}
-        className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
-      >
-        <ArrowRight className="w-6 h-6 text-white" />
-      </button>
-    </div>
-
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-      {galleryImages.map((img, idx) => (
-        <button
-          key={idx}
-          onClick={() => setActiveImageIndex(idx)}
-          className={`relative aspect-square rounded-xl overflow-hidden transition-all duration-300 group ${
-            activeImageIndex === idx 
-              ? 'ring-3 ring-amber-500 shadow-lg scale-[1.02]' 
-              : 'ring-1 ring-gray-200 hover:ring-amber-300'
-          }`}
-        >
-          <img 
-            src={img.url} 
-            alt={img.title} 
-            className="w-90 h-full object-cover group-hover:scale-110 transition-transform duration-500"
-          />
-          <div className={`absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
-            activeImageIndex === idx ? 'opacity-100' : ''
-          }`}>
-            <div className="absolute bottom-2 left-2 right-2">
-              <h4 className="text-white text-sm font-semibold truncate">{img.title}</h4>
-            </div>
+      <section className="py-20 bg-gradient-to-b from-white to-amber-50/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-16">
+            <h2 className="font-playfair text-4xl md:text-5xl mb-6">
+              Experience <span className="gradient-text">Luxury</span>
+            </h2>
+            <p className="font-inter text-gray-600 text-lg max-w-2xl mx-auto">
+              Immerse yourself in the world of fine fragrances and artisanal craftsmanship
+            </p>
           </div>
-          
-          {activeImageIndex === idx && (
-            <div className="absolute top-2 right-2 w-3 h-3 bg-amber-500 rounded-full animate-pulse"></div>
-          )}
-        </button>
-      ))}
-    </div>
-  </div>
-</section>
 
-<section className="py-20 bg-gray-500 via-black to-gray-900 text-white">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6">
-    <div className="grid lg:grid-cols-2 gap-12 items-center">
-      <div className="space-y-6">
-        <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white px-4 py-2 rounded-full mb-4">
-          <Play className="w-4 h-4" />
-          <span className="text-sm font-semibold">BEHIND THE SCENES</span>
-        </div>
-        
-        <h2 className="font-playfair text-4xl md:text-5xl">
-          The Art of <span className="text-amber-400">Perfumery</span>
-        </h2>
-        <p className="text-gray-300 text-lg leading-relaxed">
-          Watch our master perfumers craft the perfect blend. Every drop is a testament to our commitment to excellence and centuries-old artistry.
-        </p>
-        
-        <div className="space-y-3 pt-4">
-          {[
-            "Handcrafted by Master Perfumers",
-            "Traditional Techniques Preserved",
-            "Premium Quality Assurance",
-            "Sustainable Sourcing"
-          ].map((item, idx) => (
-            <div key={idx} className="flex items-center gap-3">
-              <CheckCircle className="w-5 h-5 text-black flex-shrink-0" />
-              <span className="text-gray-200">{item}</span>
+          <div className="relative h-[400px] md:h-[500px] rounded-3xl overflow-hidden shadow-2xl mb-8">
+            <img 
+              src={galleryImages[activeImageIndex].url} 
+              alt={galleryImages[activeImageIndex].title}
+              className="w-full h-full object-cover transition-all "
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent">
+              <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
+                <h3 className="text-3xl md:text-4xl font-playfair font-bold text-white mb-3">
+                  {galleryImages[activeImageIndex].title}
+                </h3>
+                <p className="text-amber-100/90 text-lg max-w-2xl">
+                  {galleryImages[activeImageIndex].description}
+                </p>
+              </div>
             </div>
-          ))}
-        </div>
-        
-        <button className="mt-6 bg-gray-900 to-orange-600 text-white px-8 py-3 rounded-full font-semibold hover:from-amber-700 hover:to-orange-700 transition-all hover-lift flex items-center gap-2">
-          <Play className="w-4 h-4" />
-          Watch Documentary
-        </button>
-      </div>
-      
-      
-      <div className="relative group">
-        <div className="absolute -inset-4 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-700"></div>
-        
-        <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl border-4 border-white/10">
-          <img 
-            src="https://i.pinimg.com/1200x/f3/43/59/f3435938903bd6e2d27e506bef5a7d94.jpg" 
-            alt="Master Perfumer at work"
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent flex items-center justify-center">
-            <button className="w-20 h-20 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-2xl group/play">
-              <Play className="w-8 h-8 text-white ml-1" />
-              <div className="absolute inset-0 rounded-full border-4 border-white/30 animate-ping opacity-0 group-hover/play:opacity-100"></div>
+            
+            <button 
+              onClick={() => setActiveImageIndex((prev) => prev === 0 ? galleryImages.length - 1 : prev - 1)}
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
+            >
+              <ArrowRight className="w-6 h-6 text-white rotate-180" />
+            </button>
+            <button 
+              onClick={() => setActiveImageIndex((prev) => (prev + 1) % galleryImages.length)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
+            >
+              <ArrowRight className="w-6 h-6 text-white" />
             </button>
           </div>
-          
-         
-          <div className="absolute bottom-6 right-6 bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full">
-            <span className="text-sm text-amber-200">Watch Now</span>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {galleryImages.map((img, idx) => (
+              <button
+                key={idx}
+                onClick={() => setActiveImageIndex(idx)}
+                className={`relative aspect-square rounded-xl overflow-hidden transition-all duration-300 group ${
+                  activeImageIndex === idx 
+                    ? 'ring-3 ring-amber-500 shadow-lg scale-[1.02]' 
+                    : 'ring-1 ring-gray-200 hover:ring-amber-300'
+                }`}
+              >
+                <img 
+                  src={img.url} 
+                  alt={img.title} 
+                  className="w-90 h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className={`absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+                  activeImageIndex === idx ? 'opacity-100' : ''
+                }`}>
+                  <div className="absolute bottom-2 left-2 right-2">
+                    <h4 className="text-white text-sm font-semibold truncate">{img.title}</h4>
+                  </div>
+                </div>
+                
+                {activeImageIndex === idx && (
+                  <div className="absolute top-2 right-2 w-3 h-3 bg-amber-500 rounded-full animate-pulse"></div>
+                )}
+              </button>
+            ))}
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
 
-      
+      <section className="py-20 bg-gray-500 via-black to-gray-900 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white px-4 py-2 rounded-full mb-4">
+                <Play className="w-4 h-4" />
+                <span className="text-sm font-semibold">BEHIND THE SCENES</span>
+              </div>
+              
+              <h2 className="font-playfair text-4xl md:text-5xl">
+                The Art of <span className="text-amber-400">Perfumery</span>
+              </h2>
+              <p className="text-gray-300 text-lg leading-relaxed">
+                Watch our master perfumers craft the perfect blend. Every drop is a testament to our commitment to excellence and centuries-old artistry.
+              </p>
+              
+              <div className="space-y-3 pt-4">
+                {[
+                  "Handcrafted by Master Perfumers",
+                  "Traditional Techniques Preserved",
+                  "Premium Quality Assurance",
+                  "Sustainable Sourcing"
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-black flex-shrink-0" />
+                    <span className="text-gray-200">{item}</span>
+                  </div>
+                ))}
+              </div>
+              
+              <button className="mt-6 bg-gray-900 to-orange-600 text-white px-8 py-3 rounded-full font-semibold hover:from-amber-700 hover:to-orange-700 transition-all hover-lift flex items-center gap-2">
+                <Play className="w-4 h-4" />
+                Watch Documentary
+              </button>
+            </div>
+            
+            <div className="relative group">
+              <div className="absolute -inset-4 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-700"></div>
+              
+              <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl border-4 border-white/10">
+                <img 
+                  src="https://i.pinimg.com/1200x/f3/43/59/f3435938903bd6e2d27e506bef5a7d94.jpg" 
+                  alt="Master Perfumer at work"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent flex items-center justify-center">
+                  <button className="w-20 h-20 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-2xl group/play">
+                    <Play className="w-8 h-8 text-white ml-1" />
+                    <div className="absolute inset-0 rounded-full border-4 border-white/30 animate-ping opacity-0 group-hover/play:opacity-100"></div>
+                  </button>
+                </div>
+                
+                <div className="absolute bottom-6 right-6 bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full">
+                  <span className="text-sm text-amber-200">Watch Now</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="py-16 bg-amber-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -798,7 +780,6 @@ useEffect(() => {
         </div>
       </section>
 
-     
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
@@ -810,7 +791,6 @@ useEffect(() => {
             </p>
           </div>
 
-       
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, idx) => (
               <div key={idx} className="bg-white p-8 rounded-2xl shadow-lg hover-lift transition-all duration-300 group border border-gray-100">
@@ -823,7 +803,6 @@ useEffect(() => {
             ))}
           </div>
 
-          
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
             {benefits.map((benefit, idx) => (
               <div key={idx} className="flex items-center gap-4 p-6 bg-white rounded-xl shadow-sm hover-lift border border-gray-100">
@@ -840,7 +819,6 @@ useEffect(() => {
         </div>
       </section>
 
-     
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
@@ -879,7 +857,6 @@ useEffect(() => {
         </div>
       </section>
 
-      
       <section className="py-20 bg-white">
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-16">
@@ -910,7 +887,6 @@ useEffect(() => {
               </div>
             </div>
             
-            
             <div className="flex justify-center gap-2 mt-8">
               {testimonials.map((_, idx) => (
                 <button
@@ -924,7 +900,6 @@ useEffect(() => {
         </div>
       </section>
 
-      
       <section className="py-20 bg-gradient-to-r from-amber-50 to-orange-50">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm text-black px-6 py-3 rounded-full shadow-sm mb-8">
@@ -962,7 +937,6 @@ useEffect(() => {
         </div>
       </section>
 
-     
       <section className="py-8 bg-gray-900 text-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-wrap items-center justify-center gap-8">

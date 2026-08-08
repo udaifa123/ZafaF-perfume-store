@@ -13,7 +13,6 @@
 #     ports:
 #       - "5000:5000"
 
-
 services:
 
   frontend:
@@ -31,6 +30,8 @@ services:
       - ./backend/.env
     depends_on:
       - mongo
+    volumes:
+      - uploads_data:/app/uploads   
 
   mongo:
     image: mongo:7
@@ -41,3 +42,4 @@ services:
 
 volumes:
   mongo_data:
+  uploads_data:  

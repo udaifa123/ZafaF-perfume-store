@@ -17,7 +17,6 @@ export default function Cart() {
 
   const navigate = useNavigate();
 
-  // Fetch cart
 useEffect(() => {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -45,28 +44,12 @@ useEffect(() => {
     }
   };
 
-  // Calculate total
   useEffect(() => {
     const t = cartItems.reduce((sum, item) => sum + item.quantity * (item.product?.price || 0), 0);
     setTotal(t);
   }, [cartItems]);
 
-//   const handleUpdateQuantity = async (cartItemId, newQty) => {
-//   if (newQty < 1) return;
 
-//   try {
-//     setUpdatingItem(cartItemId);
-//     const res = await API.put(`/cart/${cartItemId}`, {
-//       quantity: newQty,
-//     });
-//     setCartItems(res.data.items);
-//   } catch (error) {
-//     console.error("Update error", error);
-//     errorAlert(error.response?.data?.message || "Failed to update quantity");
-//   } finally {
-//     setUpdatingItem(null);
-//   }
-// };
 
 const handleUpdateQuantity = async (productId, newQty) => {
   try {
@@ -84,15 +67,6 @@ const handleUpdateQuantity = async (productId, newQty) => {
 
 
 
-//  const handleIncrease = (item) => {
-//   handleUpdateQuantity(item._id, item.quantity + 1);
-// };
-
-// const handleDecrease = (item) => {
-//   if (item.quantity <= 1) return;
-//   handleUpdateQuantity(item._id, item.quantity - 1);
-// };
-
 const handleIncrease = (item) => {
   handleUpdateQuantity(item.product._id, item.quantity + 1);
 };
@@ -103,23 +77,6 @@ const handleDecrease = (item) => {
 };
 
 
-// const handleRemove = async (item) => {
-//   const result = await confirmAlert(
-//     "Remove Item?",
-//     "This item will be permanently removed from your cart"
-//   );
-
-//   if (!result.isConfirmed) return;
-
-//   try {
-//     const res = await API.delete(`/cart/${item._id}`);
-//     setCartItems(res.data.items);
-//     successAlert("Removed!", "Item removed from cart");
-//   } catch (error) {
-//     console.error("Remove error", error);
-//     errorAlert(error.response?.data?.message || "Failed to remove item");
-//   }
-// };
 
 const handleRemove = async (item) => {
   const result = await confirmAlert("Remove Item?", "Remove from cart?");

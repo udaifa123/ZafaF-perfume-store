@@ -18,7 +18,7 @@ export default function AdminNavbar({ onMenuClick, onThemeToggle }) {
 
   return (
     <header className={`w-full ${isDark ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'} border-b ${isDark ? 'border-gray-700' : 'border-gray-200'} px-6 py-4 flex items-center justify-between shadow-sm transition-colors duration-300`}>
-      {/* LEFT SECTION */}
+     
       <div className="flex items-center gap-4">
         <button
           onClick={onMenuClick}
@@ -43,7 +43,7 @@ export default function AdminNavbar({ onMenuClick, onThemeToggle }) {
         </div>
       </div>
 
-      {/* RIGHT SECTION */}
+      
       <div className="flex items-center gap-2">
         <button
           onClick={toggleTheme}

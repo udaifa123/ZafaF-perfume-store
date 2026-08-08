@@ -1,63 +1,3 @@
-// // AdminLogin.jsx
-// import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import API from "../../api/axios";
-
-// export default function AdminLogin() {
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const navigate = useNavigate();
-
-//  const handleSubmit = async (e) => {
-//   e.preventDefault();
-//   try {
-//     const { data } = await API.post("/admin/login", { email, password });
-
-//     localStorage.setItem("userInfo", JSON.stringify(data));
-//     navigate("/admin/dashboard");
-//   } catch (err) {
-//     alert(err.response?.data?.message || "Login failed");
-//   }
-// };
-
-
-//   return (
-//     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-//       <form
-//         onSubmit={handleSubmit}
-//         className="bg-white p-8 rounded shadow-md w-full max-w-sm"
-//       >
-//         <h2 className="text-2xl font-bold mb-6 text-center">Admin Login</h2>
-//         <input
-//           type="email"
-//           placeholder="Email"
-//           value={email}
-//           onChange={(e) => setEmail(e.target.value)}
-//           className="w-full mb-4 p-2 border rounded"
-//           required
-//         />
-//         <input
-//           type="password"
-//           placeholder="Password"
-//           value={password}
-//           onChange={(e) => setPassword(e.target.value)}
-//           className="w-full mb-6 p-2 border rounded"
-//           required
-//         />
-//         <button
-//           type="submit"
-//           className="w-full bg-black text-white py-2 rounded hover:bg-gray-800 transition"
-//         >
-//           Login
-//         </button>
-//       </form>
-//     </div>
-//   );
-// }
-
-
-
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { 
@@ -93,15 +33,15 @@ export default function AdminLogin() {
     try {
       const { data } = await API.post("/admin/login", formData);
       
-      // Store admin info
+     
       localStorage.setItem("userInfo", JSON.stringify(data));
       localStorage.setItem("adminToken", data.token);
       localStorage.setItem("adminRole", data.role || "admin");
       
-      // Show success message
+     
       setSuccess("Login successful! Redirecting...");
       
-      // Short delay before redirect
+      
       setTimeout(() => {
         navigate("/admin/dashboard");
       }, 1000);
@@ -110,7 +50,7 @@ export default function AdminLogin() {
       const errorMessage = err.response?.data?.message || "Login failed. Please check your credentials.";
       setError(errorMessage);
       
-      // Auto-clear error after 5 seconds
+      
       setTimeout(() => {
         setError("");
       }, 5000);
@@ -130,7 +70,7 @@ export default function AdminLogin() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900 p-4">
       <div className="w-full max-w-md">
-        {/* Header */}
+        
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             <div className="w-16 h-16 bg-gradient-to-br from-gray-900 to-black rounded-2xl flex items-center justify-center shadow-lg border border-gray-800">
@@ -141,14 +81,14 @@ export default function AdminLogin() {
           <p className="text-gray-400">Secure access to the management dashboard</p>
         </div>
 
-        {/* Login Form Card */}
+       
         <div className="bg-gray-900 rounded-xl shadow-lg border border-gray-800 p-8">
           <div className="mb-6 text-center">
             <h2 className="text-xl font-semibold text-white">Sign In</h2>
             <p className="text-gray-400 text-sm mt-1">Enter your credentials to continue</p>
           </div>
 
-          {/* Success Message */}
+          
           {success && (
             <div className="mb-6 p-4 bg-green-900/30 border border-green-800/50 rounded-lg">
               <div className="flex items-center">
@@ -160,7 +100,7 @@ export default function AdminLogin() {
             </div>
           )}
 
-          {/* Error Message */}
+          
           {error && (
             <div className="mb-6 p-4 bg-red-900/30 border border-red-800/50 rounded-lg">
               <div className="flex items-center">
@@ -173,7 +113,7 @@ export default function AdminLogin() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Email Field */}
+            
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">
                 Email Address
@@ -193,7 +133,7 @@ export default function AdminLogin() {
               </div>
             </div>
 
-            {/* Password Field */}
+           
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">
                 Password
@@ -222,14 +162,14 @@ export default function AdminLogin() {
                 <button
                   type="button"
                   className="text-sm text-blue-500 hover:text-blue-400 font-medium"
-                  onClick={() => {/* Add forgot password logic */}}
+                  onClick={() => {}}
                 >
                   Forgot password?
                 </button>
               </div>
             </div>
 
-            {/* Submit Button */}
+           
             <button
               type="submit"
               disabled={loading}
@@ -251,7 +191,7 @@ export default function AdminLogin() {
               )}
             </button>
 
-            {/* Demo Login Button */}
+            
             <button
               type="button"
               onClick={handleDemoLogin}
@@ -261,7 +201,7 @@ export default function AdminLogin() {
             </button>
           </form>
 
-          {/* Security Notice */}
+          
           <div className="mt-8 pt-6 border-t border-gray-800">
             <div className="flex items-start">
               <Shield className="w-5 h-5 text-gray-500 mr-3 mt-0.5 flex-shrink-0" />
@@ -274,7 +214,7 @@ export default function AdminLogin() {
             </div>
           </div>
 
-          {/* Back to Main Site */}
+          
           <div className="mt-6 text-center">
             <a
               href="/"
@@ -288,7 +228,7 @@ export default function AdminLogin() {
           </div>
         </div>
 
-        {/* Footer */}
+       
         <div className="mt-6 text-center">
           <p className="text-xs text-gray-500">
             © {new Date().getFullYear()} Zafar Perfume • Admin Panel v2.0

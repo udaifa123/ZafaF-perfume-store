@@ -65,7 +65,6 @@ exports.getUserOrders = async (req, res) => {
 };
 
 /* ================= CANCEL ORDER ================= */
-/* ================= CANCEL ORDER (TIME LIMITED) ================= */
 exports.cancelOrder = async (req, res) => {
   try {
     const order = await Order.findOne({
@@ -85,7 +84,7 @@ exports.cancelOrder = async (req, res) => {
         .json({ message: "Order cannot be canceled now" });
     }
 
-    /* ⏱️ TIME LIMIT (30 minutes) */
+    /* ⏱ TIME LIMIT (30 minutes) */
     const CANCEL_LIMIT_MINUTES = 30;
 
     const createdTime = new Date(order.createdAt).getTime();
@@ -100,7 +99,7 @@ exports.cancelOrder = async (req, res) => {
       });
     }
 
-    // ✅ Cancel order
+    //  Cancel order
     order.status = "Canceled";
     order.statusHistory.push({ status: "Canceled" });
 
@@ -149,14 +148,14 @@ exports.requestReturn = async (req, res) => {
       return res.status(404).json({ message: "Order not found" });
     }
 
-    // Allow return only if Delivered
+   
     if (order.status !== "Delivered") {
       return res.status(400).json({
         message: "Only delivered orders can be returned",
       });
     }
 
-    // Mark returned items
+    
     order.items = order.items.map((item) => {
       if (items.includes(item.product.toString())) {
         return {
@@ -197,7 +196,7 @@ exports.requestCancellation = async (req, res) => {
       return res.status(404).json({ message: "Order not found" });
     }
 
-    // Cannot request if already shipped/delivered/canceled
+    
     if (
       ["Canceled", "Delivered", "Shipped"].includes(order.status)
     ) {

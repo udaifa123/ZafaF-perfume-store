@@ -110,7 +110,7 @@ exports.getRevenue = async (req, res) => {
 };
 
 
-/* ================= ADMIN ANALYTICS ================= */
+
 /* ================= ADMIN ANALYTICS ================= */
 exports.getAdminAnalytics = async (req, res) => {
   try {
@@ -123,7 +123,7 @@ exports.getAdminAnalytics = async (req, res) => {
       isDeleted: false,
     });
 
-    /* ✅ TOTAL REVENUE */
+    /*  TOTAL REVENUE */
     const revenueAgg = await Order.aggregate([
       { $match: { status: "completed", isDeleted: false } },
       { $group: { _id: null, total: { $sum: "$total" } } },
@@ -131,7 +131,7 @@ exports.getAdminAnalytics = async (req, res) => {
 
     const totalRevenue = revenueAgg[0]?.total || 0;
 
-    /* ✅ MONTHLY REVENUE */
+    /*  MONTHLY REVENUE */
     const monthlyRevenue = await Order.aggregate([
       { $match: { status: "completed", isDeleted: false } },
       {
@@ -143,7 +143,7 @@ exports.getAdminAnalytics = async (req, res) => {
       { $sort: { _id: 1 } },
     ]);
 
-    /* ✅ ORDER STATUS */
+    /*  ORDER STATUS */
     const orderStatus = await Order.aggregate([
       { $match: { isDeleted: false } },
       {

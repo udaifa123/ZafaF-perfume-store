@@ -7,7 +7,7 @@ import {
   Trash2, Eye, EyeOff, ArrowRight, ShoppingBag,
   RefreshCw, Tag, Download, MessageCircle, RotateCcw,
   ShoppingCart, Check, Circle, X, Undo2, Box,
-  Info   // ✅ ADD THIS
+  Info  
 } from "lucide-react";
 
 import { successAlert, errorAlert } from "../utils/alert";
@@ -30,7 +30,7 @@ export default function UserOrders() {
     try {
       setLoading(true);
       const res = await API.get("/orders");
-      console.log("Orders Data:", res.data); // Debug log
+      console.log("Orders Data:", res.data); 
       setOrders(res.data || []);
     } catch (err) {
       console.error(err);
@@ -44,7 +44,6 @@ export default function UserOrders() {
     fetchOrders();
   }, []);
 
-  // CANCEL INDIVIDUAL ORDER
   const cancelOrder = async (orderId) => {
     if (!window.confirm("Are you sure you want to cancel this order?")) return;
     try {
@@ -56,7 +55,6 @@ export default function UserOrders() {
     }
   };
 
-  // CLEAR ALL CANCELED ORDERS
   const clearCanceledOrders = async () => {
     if (!window.confirm("Clear all canceled orders from your history?")) return;
     try {
@@ -68,37 +66,31 @@ export default function UserOrders() {
     }
   };
 
-  // Check if order can be returned
   const canReturnOrder = (order) => {
-    // Allow return for Delivered orders within 30 days
     if (order.status?.toLowerCase() !== "delivered") return false;
     
     const deliveredDate = new Date(order.updatedAt || order.createdAt);
     const currentDate = new Date();
     const daysDifference = (currentDate - deliveredDate) / (1000 * 60 * 60 * 24);
     
-    return daysDifference <= 30; // 30-day return policy
+    return daysDifference <= 30; 
   };
 
-  // Check if order can be canceled
  const canCancelOrder = (order) => {
-  // ✅ Status check
   const cancelableStatuses = ["processing", "pending"];
 
   if (!cancelableStatuses.includes(order.status?.toLowerCase())) {
     return false;
   }
 
-  // ⏰ Time limit check (30 minutes)
   const orderTime = new Date(order.createdAt);
   const now = new Date();
   const diffMinutes = (now - orderTime) / (1000 * 60);
 
-  return diffMinutes <= 30; // 🔥 ONLY 30 mins
+  return diffMinutes <= 30; 
 };
 
 
-  // INITIATE RETURN
   const initiateReturn = (order) => {
     setCurrentOrderForReturn(order);
     setSelectedItemsToReturn({});
@@ -106,7 +98,6 @@ export default function UserOrders() {
     setShowReturnModal(true);
   };
 
-  // SUBMIT RETURN REQUEST
   const submitReturnRequest = async () => {
     if (!currentOrderForReturn) return;
     
@@ -133,13 +124,11 @@ export default function UserOrders() {
       await API.post("/orders/return", returnData);
       successAlert("Return Request Submitted", "Your return request has been submitted successfully");
       
-      // Reset state
       setShowReturnModal(false);
       setCurrentOrderForReturn(null);
       setSelectedItemsToReturn({});
       setReturnReason("");
       
-      // Refresh orders
       fetchOrders();
     } catch (err) {
       errorAlert("Error", "Failed to submit return request", err);
@@ -182,16 +171,15 @@ export default function UserOrders() {
     const isProcessing = status === 'Processing' || status === 'processing' || isShipped || isDelivered;
     const isReturned = status === 'Returned' || status === 'returned' || status === 'Return Requested' || status === 'return requested';
 
-    // Calculate realistic dates for each step
     const placedDate = orderDate;
     const processingDate = new Date(orderDate);
-    processingDate.setHours(processingDate.getHours() + 2); // 2 hours after order
+    processingDate.setHours(processingDate.getHours() + 2);
     
     const shippedDate = new Date(orderDate);
-    shippedDate.setDate(shippedDate.getDate() + 1); // 1 day after order
+    shippedDate.setDate(shippedDate.getDate() + 1); 
     
     const deliveredDate = new Date(orderDate);
-    deliveredDate.setDate(deliveredDate.getDate() + 3); // 3 days after order
+    deliveredDate.setDate(deliveredDate.getDate() + 3); 
 
     const steps = [
       { 
@@ -281,7 +269,6 @@ export default function UserOrders() {
   const filteredOrders = orders.filter(order => {
     if (!showCanceledOrders && order.status.toLowerCase() === "canceled") return false;
     if (filterStatus !== "all" && order.status !== filterStatus) {
-      // Handle case-insensitive comparison
       if (filterStatus.toLowerCase() === "all") return true;
       if (order.status.toLowerCase() !== filterStatus.toLowerCase()) return false;
     }
@@ -301,7 +288,6 @@ export default function UserOrders() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Header */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -325,7 +311,6 @@ export default function UserOrders() {
                 {showCanceledOrders ? "Hide Canceled" : "Show Canceled"}
               </button>
               
-              {/* Clear Canceled Button - Removes canceled orders from history */}
               <button 
                 onClick={clearCanceledOrders}
                 className="flex items-center gap-2 px-4 py-2 rounded-lg border border-red-200 text-red-700 text-sm font-medium hover:bg-red-50 transition-colors"
@@ -346,7 +331,6 @@ export default function UserOrders() {
         </div>
       </div>
 
-      {/* Filter Bar */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center gap-4">
@@ -370,7 +354,6 @@ export default function UserOrders() {
         </div>
       </div>
 
-      {/* Orders List */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {filteredOrders.length === 0 ? (
           <div className="text-center py-20">
@@ -399,7 +382,6 @@ export default function UserOrders() {
                   key={order._id} 
                   className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow"
                 >
-                  {/* Order Header */}
                   <div className="p-6 border-b border-gray-100">
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                       <div>
@@ -433,7 +415,6 @@ export default function UserOrders() {
                           <ChevronRight className={`w-4 h-4 transition-transform ${expandedOrder === order._id ? "rotate-90" : ""}`} />
                         </button>
                         
-                        {/* Cancel Order Button - Shows for Processing and Skipped orders */}
                         {canCancel && (
                           <button
                             onClick={() => cancelOrder(order._id)}
@@ -455,7 +436,6 @@ export default function UserOrders() {
                     </div>
                   </div>
 
-                  {/* Order Items */}
                   <div className="p-6 border-b border-gray-100">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                       {order.items?.slice(0, 3).map((item, idx) => (
@@ -491,7 +471,6 @@ export default function UserOrders() {
                                   onClick={() => navigate(`/products/${item.product._id}`)}
                                   className="text-sm text-amber-600 hover:text-amber-700 font-medium"
                                 >
-                                  {/* View Product */}
                                 </button>
                               )}
                             </div>
@@ -510,23 +489,19 @@ export default function UserOrders() {
                     </div>
                   </div>
 
-                  {/* Expanded Details */}
                   {expandedOrder === order._id && (
                     <div className="border-t border-gray-100">
-                      {/* Tracking Timeline */}
                       <div className="p-6 border-b border-gray-100">
                         <h3 className="font-medium text-gray-900 mb-6 flex items-center gap-2">
                           <Truck className="w-5 h-5" />
                           Order Tracking
                         </h3>
                         <div className="relative">
-                          {/* Vertical Line */}
                           <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-200"></div>
                           
                           <div className="space-y-8">
                             {trackingSteps.map((step, index) => (
                               <div key={index} className="relative flex gap-4">
-                                {/* Step Icon */}
                                 <div className={`z-10 flex-shrink-0 w-16 h-16 rounded-full flex items-center justify-center ${
                                   step.status === "completed" ? "bg-green-100 border-2 border-green-300" :
                                   step.status === "canceled" ? "bg-red-100 border-2 border-red-300" :
@@ -541,7 +516,6 @@ export default function UserOrders() {
                                   </div>
                                 </div>
                                 
-                                {/* Step Details */}
                                 <div className="flex-1 pb-8">
                                   <div className="flex items-center justify-between mb-1">
                                     <div className="flex items-center gap-2">
@@ -576,9 +550,7 @@ export default function UserOrders() {
                         </div>
                       </div>
 
-                      {/* Address & Payment Details */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
-                        {/* Shipping Address */}
                         <div>
                           <h4 className="font-medium text-gray-900 mb-4 flex items-center gap-2">
                             <MapPin className="w-5 h-5" />
@@ -605,7 +577,6 @@ export default function UserOrders() {
                           </div>
                         </div>
 
-                        {/* Payment Details */}
                         <div>
                           <h4 className="font-medium text-gray-900 mb-4 flex items-center gap-2">
                             <CreditCard className="w-5 h-5" />
@@ -646,7 +617,6 @@ export default function UserOrders() {
                         </div>
                       </div>
 
-                      {/* Action Buttons */}
                       <div className="px-6 pb-6">
                         <div className="flex flex-wrap gap-3">
                           {canReturn && (
@@ -685,7 +655,6 @@ export default function UserOrders() {
           </div>
         )}
 
-        {/* Stats */}
         {filteredOrders.length > 0 && (
           <div className="mt-8 grid grid-cols-1 md:grid-cols-6 gap-4">
             <div className="bg-white p-6 rounded-xl border border-gray-200">
@@ -726,7 +695,7 @@ export default function UserOrders() {
         )}
       </div>
 
-      {/* Return Modal */}
+     
       {showReturnModal && currentOrderForReturn && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
@@ -744,18 +713,17 @@ export default function UserOrders() {
             </div>
 
             <div className="p-6">
-              {/* Items Selection */}
               <div className="space-y-4 mb-6">
                 <h4 className="font-medium text-gray-900">Select Items to Return:</h4>
             {currentOrderForReturn.items?.map((item, idx) => {
   const productId =
     typeof item.product === "object"
       ? String(item.product._id)
-      : String(item.product); // 🔥 FORCE STRING
+      : String(item.product); 
 
   return (
     <div
-      key={idx}   // ✅ USE idx (IMPORTANT)
+      key={idx}   
       className="flex items-center justify-between p-4 border border-gray-200 rounded-lg"
     >
       <div className="flex items-center gap-3">
@@ -803,7 +771,6 @@ export default function UserOrders() {
 
               </div>
 
-              {/* Return Reason */}
               <div className="mb-6">
                 <label htmlFor="returnReason" className="block font-medium text-gray-900 mb-2">
                   Reason for Return *
@@ -819,7 +786,6 @@ export default function UserOrders() {
                 />
               </div>
 
-              {/* Return Policy Info */}
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
                 <div className="flex items-start gap-2">
                   <Info className="w-5 h-5 text-blue-600 mt-0.5" />
@@ -832,7 +798,6 @@ export default function UserOrders() {
                 </div>
               </div>
 
-              {/* Modal Actions */}
               <div className="flex justify-end gap-3">
                 <button
                   onClick={() => setShowReturnModal(false)}

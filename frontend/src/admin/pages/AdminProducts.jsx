@@ -47,9 +47,7 @@ export default function AdminProducts() {
   const [editId, setEditId] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const fileInputRef = useRef(null);
-  // const [activeMenu, setActiveMenu] = useState(null);
 
-  // Fetch products with filters
  const fetchProducts = useCallback(async (p = page) => {
   setLoading(true);
   try {
@@ -78,12 +76,10 @@ export default function AdminProducts() {
 }, [page, searchTerm, categoryFilter]);
 
 
-  // Initial load
   useEffect(() => {
     fetchProducts(1);
   }, [fetchProducts]);
 
-  // Handle search and filter changes - reset to page 1
  useEffect(() => {
   const timeoutId = setTimeout(() => {
     setPage(1);
@@ -94,7 +90,6 @@ export default function AdminProducts() {
 }, [searchTerm, categoryFilter, fetchProducts]);
 
 
-  // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setForm(prev => ({
@@ -103,7 +98,6 @@ export default function AdminProducts() {
     }));
   };
 
-  // Handle file input
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -112,7 +106,6 @@ export default function AdminProducts() {
     }
   };
 
-  // Open form for editing
   const openEditForm = (product) => {
     setEditId(product._id);
     setForm({
@@ -127,7 +120,6 @@ export default function AdminProducts() {
     setShowForm(true);
   };
 
-  // Reset form
   const resetForm = () => {
     setForm({
       name: "",
@@ -145,7 +137,6 @@ export default function AdminProducts() {
     }
   };
 
-  // Submit form
   const submitHandler = async (e) => {
     e.preventDefault();
     
@@ -182,7 +173,6 @@ export default function AdminProducts() {
     }
   };
 
-  // Delete product
   const deleteHandler = async (id) => {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
 
@@ -191,7 +181,6 @@ export default function AdminProducts() {
       await API.delete(`/admin/products/${id}`);
       alert("Product deleted successfully!");
       
-      // If current page becomes empty after deletion, go to previous page
       if (products.length === 1 && page > 1) {
         fetchProducts(page - 1);
       } else {
@@ -205,12 +194,10 @@ export default function AdminProducts() {
     }
   };
 
-  // View product details
   const viewProduct = (product) => {
     alert(`Viewing: ${product.name}\nPrice: ₹${product.price}\nStock: ${product.stock}\nCategory: ${product.category}`);
   };
 
-  // Pagination handlers
   const goToPage = (pageNum) => {
     if (pageNum >= 1 && pageNum <= pages) {
       setPage(pageNum);
@@ -218,7 +205,6 @@ export default function AdminProducts() {
     }
   };
 
-  // Generate page numbers for pagination
   const getPageNumbers = () => {
     const delta = 2;
     const range = [];
@@ -246,7 +232,7 @@ export default function AdminProducts() {
     return rangeWithDots;
   };
 
-  // Statistics
+  
   const totalValue = products.reduce((sum, p) => sum + (p.price * (p.stock || 0)), 0);
   const averagePrice = products.length > 0 
     ? products.reduce((sum, p) => sum + p.price, 0) / products.length 
@@ -255,7 +241,6 @@ export default function AdminProducts() {
   return (
     <div className="flex min-h-screen bg-gray-900">
       <main className="flex-1 p-6 lg:p-8">
-        {/* Header */}
         <div className="mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
@@ -273,7 +258,6 @@ export default function AdminProducts() {
           </div>
         </div>
 
-        {/* Stats Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <div className="bg-gray-900 rounded-xl p-5 border border-gray-800">
             <div className="flex items-center justify-between">
@@ -328,10 +312,8 @@ export default function AdminProducts() {
           </div>
         </div>
 
-        {/* Toolbar */}
         <div className="bg-gray-900 rounded-xl border border-gray-800 p-4 mb-6">
           <div className="flex flex-col lg:flex-row gap-4">
-            {/* Search */}
             <div className="flex-1">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
@@ -345,7 +327,6 @@ export default function AdminProducts() {
               </div>
             </div>
 
-            {/* Filters */}
             <div className="flex flex-wrap gap-3">
               <div className="relative">
                 <select
@@ -374,7 +355,6 @@ export default function AdminProducts() {
           </div>
         </div>
 
-        {/* Add Product Button */}
         {!showForm && (
           <div className="mb-6">
             <button
@@ -387,7 +367,6 @@ export default function AdminProducts() {
           </div>
         )}
 
-        {/* Product Form */}
         {showForm && (
           <div className="bg-gray-900 rounded-xl border border-gray-800 p-6 mb-6">
             <div className="flex items-center justify-between mb-6">
@@ -596,7 +575,6 @@ export default function AdminProducts() {
           </div>
         )}
 
-        {/* Products Table */}
         <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
           <div className="px-6 py-4 border-b border-gray-800">
             <div className="flex items-center justify-between">
@@ -741,50 +719,7 @@ export default function AdminProducts() {
                               <Trash2 className="w-4 h-4" />
                             </button>
                             <div className="relative">
-                              {/* <button
-                                onClick={() => setActiveMenu(activeMenu === product._id ? null : product._id)}
-                                className="p-2 text-gray-500 hover:text-gray-300 hover:bg-gray-800 rounded-lg transition-colors"
-                              >
-                                <MoreVertical className="w-4 h-4" />
-                              </button> */}
-{/*                               
-                              {activeMenu === product._id && (
-                                <div className="absolute right-0 mt-1 w-48 bg-gray-800 rounded-lg shadow-lg border border-gray-700 z-10">
-                                  <div className="py-1">
-                                    <button
-                                      onClick={() => {
-                                        viewProduct(product);
-                                        setActiveMenu(null);
-                                      }}
-                                      className="flex items-center w-full px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-700 transition-colors"
-                                    >
-                                      <Eye className="w-4 h-4 mr-3" />
-                                      View Details
-                                    </button>
-                                    <button
-                                      onClick={() => {
-                                        openEditForm(product);
-                                        setActiveMenu(null);
-                                      }}
-                                      className="flex items-center w-full px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-700 transition-colors"
-                                    >
-                                      <Edit2 className="w-4 h-4 mr-3" />
-                                      Edit Product
-                                    </button>
-                                    <div className="border-t border-gray-700 my-1"></div>
-                                    <button
-                                      onClick={() => {
-                                        deleteHandler(product._id);
-                                        setActiveMenu(null);
-                                      }}
-                                      className="flex items-center w-full px-4 py-2.5 text-sm text-red-400 hover:bg-gray-700 transition-colors"
-                                    >
-                                      <Trash2 className="w-4 h-4 mr-3" />
-                                      Delete Product
-                                    </button>
-                                  </div>
-                                </div>
-                              )} */}
+                              
                             </div>
                           </div>
                         </td>
@@ -794,7 +729,7 @@ export default function AdminProducts() {
                 </table>
               </div>
 
-              {/* Pagination */}
+             
               {pages > 1 && (
                 <div className="border-t border-gray-800 px-6 py-4">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">

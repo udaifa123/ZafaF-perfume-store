@@ -84,7 +84,7 @@ export default function Revenue() {
         />
       </div>
 
-      {/* RECENT ORDERS */}
+      
       <div className="bg-gray-900 rounded-xl shadow-2xl overflow-hidden border border-gray-800">
         <div className="p-5 border-b border-gray-800">
           <h2 className="text-xl font-semibold text-white">Recent Orders</h2>
@@ -153,7 +153,7 @@ export default function Revenue() {
   );
 }
 
-/* SMALL REUSABLE CARD */
+
 function StatCard({ title, value, icon, gradient }) {
   return (
     <div className={`bg-gradient-to-br ${gradient} p-6 rounded-2xl shadow-2xl border border-gray-800 hover:border-gray-700 transition-all duration-300`}>

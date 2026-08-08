@@ -42,15 +42,11 @@ export default function AdminOrders() {
 
     let ordersData = res.data || [];
 
-    // ✅ Normalize orders so shipping, phone, and items always exist
     const normalizedOrders = ordersData.map(order => {
       return {
         ...order,
-        // Ensure shippingAddress exists
         shippingAddress: order.shippingAddress || order.address || order.deliveryAddress || null,
-        // Ensure orderItems exists
         orderItems: order.orderItems || order.items || order.cartItems || [],
-        // Ensure phone exists
         user: {
           ...order.user,
           phone: order.user?.phone || order.shippingAddress?.phone || order.shippingAddress?.mobile || order.phone || null
@@ -71,7 +67,6 @@ export default function AdminOrders() {
   const updateStatus = async (id, status) => {
     try {
       await API.put(`/admin/orders/${id}/status`, { status });
-      // Update local state immediately
       setOrders(prevOrders => 
         prevOrders.map(order => 
           order._id === id ? { ...order, status } : order
@@ -83,30 +78,7 @@ export default function AdminOrders() {
     }
   };
 
-  // const deleteOrder = async (id) => {
-  //   if (!window.confirm("Are you sure you want to delete this order? This action cannot be undone.")) {
-  //     return;
-  //   }
 
-  //   try {
-  //     console.log("Deleting order with ID:", id);
-  //     await API.delete(`/admin/orders/${id}`);
-      
-  //     // Remove from local state immediately
-  //     setOrders(prevOrders => prevOrders.filter(order => order._id !== id));
-      
-  //     // Close expanded view if it's the deleted order
-  //     if (expandedOrder === id) {
-  //       setExpandedOrder(null);
-  //     }
-      
-  //     alert("Order deleted successfully!");
-  //   } catch (error) {
-  //     console.error("Error deleting order:", error);
-  //     const errorMessage = error.response?.data?.message || "Failed to delete order. Please try again.";
-  //     alert(errorMessage);
-  //   }
-  // };
 
   useEffect(() => {
     fetchOrders();
@@ -147,7 +119,6 @@ export default function AdminOrders() {
     setStatusFilter(e.target.value);
   };
 
-  // Filter orders based on search term and status filter
   const filteredOrders = orders.filter(order => {
     const searchLower = searchTerm.toLowerCase();
     const matchesSearch = 
@@ -161,7 +132,6 @@ export default function AdminOrders() {
     return matchesSearch && matchesStatus;
   });
 
-  // Calculate statistics
  const calculateStats = () => {
   const total = orders.length;
   const pending = orders.filter(o => o.status === 'Pending').length;
@@ -202,17 +172,14 @@ export default function AdminOrders() {
   };
 
   const calculateOrderTotal = (order) => {
-    // First check if totalPrice exists
     if (order.totalPrice !== undefined && order.totalPrice !== null) {
       return parseFloat(order.totalPrice);
     }
     
-    // Then check if total exists
     if (order.total !== undefined && order.total !== null) {
       return parseFloat(order.total);
     }
     
-    // Calculate from order items if totalPrice doesn't exist
     if (order.orderItems && order.orderItems.length > 0) {
       return order.orderItems.reduce((sum, item) => {
         const price = parseFloat(item.price) || 0;
@@ -227,7 +194,6 @@ export default function AdminOrders() {
   return (
     <div className="flex min-h-screen bg-gray-900">
       <main className="flex-1 p-6 lg:p-8">
-        {/* Header */}
         <div className="mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
@@ -245,7 +211,6 @@ export default function AdminOrders() {
           </div>
         </div>
 
-        {/* Stats Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
           <div className="bg-gray-900 rounded-xl p-5 border border-gray-800">
             <div className="flex items-center justify-between">
@@ -310,25 +275,10 @@ export default function AdminOrders() {
 </div>
 
 
-          {/* <div className="bg-gray-900 rounded-xl p-5 border border-gray-800">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-400">Revenue</p>
-                <p className="text-2xl font-bold text-white mt-1">
-                  {formatPrice(stats.revenue)}
-                </p>
-              </div>
-              <div className="p-3 bg-purple-900/30 rounded-lg">
-                <CreditCard className="w-6 h-6 text-purple-400" />
-              </div>
-            </div>
-          </div> */}
         </div>
 
-        {/* Toolbar */}
         <div className="bg-gray-900 rounded-xl border border-gray-800 p-4 mb-6">
           <div className="flex flex-col lg:flex-row gap-4">
-            {/* Search */}
             <div className="flex-1">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
@@ -342,7 +292,6 @@ export default function AdminOrders() {
               </div>
             </div>
 
-            {/* Filters */}
             <div className="flex flex-wrap gap-3">
               <div className="relative">
                 <select
@@ -378,7 +327,6 @@ export default function AdminOrders() {
           </div>
         </div>
 
-        {/* Orders Table */}
         <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
           {loading && orders.length === 0 ? (
             <div className="flex items-center justify-center py-20">
@@ -509,13 +457,7 @@ export default function AdminOrders() {
                                 )}
                               </button>
 
-                              {/* <button
-                                onClick={() => deleteOrder(order._id)}
-                                className="inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium bg-red-900/30 text-red-400 hover:bg-red-800/50 border border-red-800/50 transition-all"
-                              >
-                                <Trash2 className="w-4 h-4 mr-1" />
-                                Delete
-                              </button> */}
+                              
                             </div>
                           </td>
                         </tr>
@@ -535,7 +477,6 @@ export default function AdminOrders() {
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                  {/* Customer Information */}
                                   <div className="bg-gray-800 rounded-lg p-5 border border-gray-700">
                                     <h5 className="font-semibold text-white mb-4 flex items-center">
                                       <User className="w-4 h-4 mr-2" />
@@ -557,7 +498,6 @@ export default function AdminOrders() {
                                     </div>
                                   </div>
 
-                                  {/* Shipping Address */}
                                   <div className="bg-gray-800 rounded-lg p-5 border border-gray-700">
                                     <h5 className="font-semibold text-white mb-4 flex items-center">
                                       <MapPin className="w-4 h-4 mr-2" />
@@ -591,7 +531,6 @@ export default function AdminOrders() {
                                   </div>
                                 </div>
 
-                                {/* Order Items */}
                                 <div className="bg-gray-800 rounded-lg p-5 border border-gray-700">
                                   <h5 className="font-semibold text-white mb-4">Order Items</h5>
                                   <div className="space-y-3">
@@ -626,7 +565,6 @@ const itemQuantity =
                                   </div>
                                 </div>
 
-                                {/* Order Summary */}
                                 <div className="bg-gray-800 rounded-lg p-5 border border-gray-700">
                                   <h5 className="font-semibold text-white mb-4">Order Summary</h5>
                                   <div className="space-y-3">
@@ -660,7 +598,6 @@ const itemQuantity =
                                   </div>
                                 </div>
 
-                                {/* Order Status & Payment */}
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                   <div className="bg-gray-800 rounded-lg p-5 border border-gray-700">
                                     <h5 className="font-semibold text-white mb-4">Order Status</h5>

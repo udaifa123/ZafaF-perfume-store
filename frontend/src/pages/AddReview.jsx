@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import API from "../api/axios";
 
 export default function AddReview() {
-  const { id } = useParams(); // product id
+  const { id } = useParams(); 
   const navigate = useNavigate();
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");

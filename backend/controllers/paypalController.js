@@ -45,7 +45,7 @@ exports.createPayPalOrder = async (req, res) => {
     const order = await client().execute(request);
     console.log("PayPal order created:", order.result.id);
 
-    // Create order in database
+    
     const newOrder = new Order({
       user: userId,
       orderItems: cartItems || [],
@@ -101,7 +101,7 @@ exports.capturePayPalPayment = async (req, res) => {
     console.log("Capture result status:", capture.result.status);
 
     if (capture.result.status === "COMPLETED") {
-      // Update order in database
+      
       const order = await Order.findById(dbOrderId);
       if (!order) {
         return res.status(404).json({ 
@@ -163,7 +163,6 @@ exports.capturePayPalPayment = async (req, res) => {
   }
 };
 
-/* ================= GET PAYPAL CLIENT ID ================= */
 exports.getPayPalClientId = async (req, res) => {
   try {
     console.log("Sending PayPal client ID:", process.env.PAYPAL_CLIENT_ID);
@@ -183,7 +182,6 @@ exports.getPayPalClientId = async (req, res) => {
   }
 };
 
-/* ================= VERIFY PAYPAL PAYMENT ================= */
 exports.verifyPayPalPayment = async (req, res) => {
   try {
     const { orderID } = req.body;
@@ -206,10 +204,8 @@ exports.verifyPayPalPayment = async (req, res) => {
   }
 };
 
-/* ================= TEST PAYPAL CONNECTION ================= */
 exports.testPayPalConnection = async (req, res) => {
   try {
-    // Simple test to check PayPal connection
     const clientId = process.env.PAYPAL_CLIENT_ID;
     const mode = process.env.PAYPAL_MODE || 'sandbox';
     

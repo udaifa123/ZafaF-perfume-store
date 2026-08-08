@@ -48,7 +48,7 @@ export default function AdminReports() {
   return (
     <div className="min-h-screen bg-ggray-900 via-black to-gray-900">
       <div className="p-6 lg:p-8">
-        {/* Header Section */}
+        
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/20">
@@ -61,7 +61,7 @@ export default function AdminReports() {
           </div>
         </div>
 
-        {/* Stats Cards */}
+     
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {reports.map((report, i) => (
             <div
@@ -121,7 +121,6 @@ export default function AdminReports() {
           ))}
         </div>
 
-        {/* Reports Table */}
         <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl border border-gray-700 shadow-2xl overflow-hidden">
           <div className="p-6 border-b border-gray-700">
             <h2 className="text-xl font-bold text-white flex items-center gap-2">
@@ -218,7 +217,7 @@ export default function AdminReports() {
           )}
         </div>
 
-        {/* Footer Stats */}
+      
         {reports.length > 0 && (
           <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-6 border border-gray-700">

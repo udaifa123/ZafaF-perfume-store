@@ -335,7 +335,6 @@ const handleAddToWishlist = async () => {
               </div>
             </div>
 
-            {/* Reviews Section */}
             <div className="mt-20 pt-12 border-t border-gray-200">
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-medium text-gray-900 uppercase tracking-wide">Customer Reviews</h2>

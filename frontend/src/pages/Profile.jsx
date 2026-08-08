@@ -40,6 +40,23 @@ import {
 } from "lucide-react";
 import { successAlert, errorAlert } from "../utils/alert";
 
+// Moved DEFAULT_SETTINGS outside the component
+const DEFAULT_SETTINGS = {
+  language: "English (United States)",
+  region: "US",
+  emailNotifications: true,
+  orderUpdates: true,
+  securityAlerts: true,
+  promotionalEmails: false,
+  smsNotifications: false,
+  pushNotifications: true,
+  profilePublic: true,
+  showEmail: false,
+  allowIndexing: true,
+  showOnlineStatus: true,
+  allowFriendRequests: true
+};
+
 export default function Profile() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -83,22 +100,8 @@ export default function Profile() {
     isDefault: false
   });
   
-  // Settings states
-  const [settings, setSettings] = useState({
-    language: "English (United States)",
-    region: "US",
-    emailNotifications: true,
-    orderUpdates: true,
-    securityAlerts: true,
-    promotionalEmails: false,
-    smsNotifications: false,
-    pushNotifications: true,
-    profilePublic: true,
-    showEmail: false,
-    allowIndexing: true,
-    showOnlineStatus: true,
-    allowFriendRequests: true
-  });
+  // Settings states - initialized with DEFAULT_SETTINGS
+  const [settings, setSettings] = useState(DEFAULT_SETTINGS);
 
   const [stats, setStats] = useState({
     orders: 0,
@@ -144,10 +147,11 @@ export default function Profile() {
       if (userData.settings) {
         setSettings(userData.settings);
       } else {
-        // Save default settings
-        userData.settings = settings;
+        // Use DEFAULT_SETTINGS directly (not the settings state)
+        userData.settings = { ...DEFAULT_SETTINGS };
         parsed.user = userData;
         localStorage.setItem("userInfo", JSON.stringify(parsed));
+        setSettings({ ...DEFAULT_SETTINGS });
       }
       
       // Load profile image if exists
@@ -198,7 +202,7 @@ export default function Profile() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, []); // ← Fixed: No more warning
 
   useEffect(() => {
     if (!user) return;

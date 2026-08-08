@@ -32,7 +32,7 @@ exports.getStats = async (req, res) => {
       products,
       avgOrderValue,
 
-      // optional (safe defaults)
+     
       conversionRate: 0,
       activeSessions: 0,
     });

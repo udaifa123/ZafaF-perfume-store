@@ -9,7 +9,7 @@ export default function AdminReviews() {
     fetchReviews();
   }, []);
 
-  // ✅ NO id used here
+  
   const fetchReviews = async () => {
     try {
       const { data } = await API.get("/reviews/admin/all");
@@ -22,13 +22,13 @@ export default function AdminReviews() {
     }
   };
 
-  // ✅ id is ONLY used here
+ 
   const deleteReview = async (id) => {
     if (!window.confirm("Delete this review?")) return;
 
     try {
       await API.delete(`/reviews/admin/${id}`);
-      fetchReviews(); // reload list
+      fetchReviews();
     } catch (err) {
       console.error(err);
       alert("Failed to delete review");

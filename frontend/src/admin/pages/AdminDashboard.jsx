@@ -52,7 +52,7 @@ export default function Dashboard() {
     fetchStats();
   }, []);
 
-  // Format currency
+  
   const formatCurrency = (amount) => {
     if (!amount) return "₹0";
     return new Intl.NumberFormat('en-IN', {
@@ -63,13 +63,12 @@ export default function Dashboard() {
     }).format(amount);
   };
 
-  // Format number with commas
+  
   const formatNumber = (num) => {
     if (!num) return "0";
     return new Intl.NumberFormat('en-IN').format(num);
   };
 
-  // Calculate percentage changes (mock data - replace with actual API data)
   const getPercentageChange = (type) => {
     const changes = {
       users: 12.5,
@@ -80,7 +79,6 @@ export default function Dashboard() {
     return changes[type] || 0;
   };
 
-  // Sales data for line chart (last 7 days)
   const salesData = [
     { day: 'Mon', sales: 42000, orders: 18 },
     { day: 'Tue', sales: 52000, orders: 22 },
@@ -91,7 +89,6 @@ export default function Dashboard() {
     { day: 'Sun', sales: 68000, orders: 26 }
   ];
 
-  // Revenue by category for bar chart
   const revenueByCategory = [
     { category: 'Premium', revenue: 125000, count: 45 },
     { category: 'Best Seller', revenue: 98000, count: 62 },
@@ -100,7 +97,6 @@ export default function Dashboard() {
     { category: 'Gifts', revenue: 56000, count: 42 }
   ];
 
-  // Order status distribution for pie chart
   const orderStatusData = [
     { name: 'Delivered', value: 45, color: '#10B981' },
     { name: 'Processing', value: 25, color: '#3B82F6' },
@@ -173,7 +169,7 @@ export default function Dashboard() {
 
   return (
     <div className="p-6 bg-gray-900 text-white h-full">
-      {/* Header */}
+    
       <div className="flex justify-between items-center mb-8">
         <div>
           <h1 className="text-2xl font-bold">Dashboard Overview</h1>
@@ -188,7 +184,7 @@ export default function Dashboard() {
         </button>
       </div>
 
-      {/* Stats Grid */}
+     
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {statCards.map((stat, index) => (
           <div
@@ -226,9 +222,9 @@ export default function Dashboard() {
         ))}
       </div>
 
-      {/* Charts Section */}
+     
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        {/* Sales Trend Chart */}
+       
         <div className="bg-gray-900 rounded-xl border border-gray-800 p-6">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center">
@@ -285,7 +281,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Revenue by Category Chart */}
+        
         <div className="bg-gray-900 rounded-xl border border-gray-800 p-6">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center">
@@ -337,9 +333,8 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Additional Dashboard Sections */}
+    
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Order Status Distribution */}
         <div className="bg-gray-900 rounded-xl border border-gray-800 p-6">
           <div className="flex items-center mb-6">
             <PieChart className="w-5 h-5 text-purple-400 mr-2" />
@@ -386,9 +381,9 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Quick Stats & Status Card */}
+       
         <div className="space-y-6">
-          {/* Quick Stats */}
+        
           <div className="bg-gray-900 rounded-xl border border-gray-800 p-6">
             <div className="flex items-center mb-6">
               <Activity className="w-5 h-5 text-blue-400 mr-2" />
@@ -419,7 +414,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Status Card */}
+         
           <div className="bg-gradient-to-r from-blue-700 to-purple-800 rounded-xl border border-blue-800 p-6">
             <div className="flex justify-between items-start">
               <div>
@@ -443,7 +438,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Footer Note */}
+     
       <div className="mt-8 text-center">
         <p className="text-sm text-gray-500">
           Data updates in real-time • Last refresh: {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}

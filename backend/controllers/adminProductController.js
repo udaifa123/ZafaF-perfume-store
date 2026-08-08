@@ -30,11 +30,11 @@ exports.getProducts = async (req, res) => {
     // 🔹 BASE QUERY
     const query = { isDeleted: false };
 
-    // 🔍 SEARCH (BY PRODUCT NAME)
+    //  SEARCH (BY PRODUCT NAME)
     if (req.query.search) {
       query.name = {
         $regex: req.query.search,
-        $options: "i", // case-insensitive
+        $options: "i", 
       };
     }
 
@@ -43,10 +43,10 @@ exports.getProducts = async (req, res) => {
       query.category = req.query.category;
     }
 
-    // 🔢 TOTAL COUNT
+    //  TOTAL COUNT
     const total = await Product.countDocuments(query);
 
-    // 📦 FETCH PRODUCTS
+    //  FETCH PRODUCTS
     const products = await Product.find(query)
       .skip(skip)
       .limit(limit)

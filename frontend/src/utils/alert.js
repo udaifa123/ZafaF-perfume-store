@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 
-/* SUCCESS ALERT */
+
 export const successAlert = (title, text) => {
   return Swal.fire({
     icon: "success",
@@ -10,7 +10,6 @@ export const successAlert = (title, text) => {
   });
 };
 
-/* ERROR ALERT */
 export const errorAlert = (title, text) => {
   return Swal.fire({
     icon: "error",
@@ -20,7 +19,6 @@ export const errorAlert = (title, text) => {
   });
 };
 
-/* CONFIRM ALERT */
 export const confirmAlert = (title, text) => {
   return Swal.fire({
     icon: "warning",

@@ -70,12 +70,11 @@ export default function AdminProfile() {
   const handleSave = () => {
     setIsSaving(true);
     
-    // Simulate API call
+    
     setTimeout(() => {
       setIsSaving(false);
       setShowSuccess(true);
       
-      // Hide success message after 3 seconds
       setTimeout(() => setShowSuccess(false), 3000);
     }, 800);
   };
@@ -114,7 +113,7 @@ export default function AdminProfile() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-slate-950 p-4 md:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
+        
         <div className="mb-10">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
             <div className="flex items-center gap-4">
@@ -147,7 +146,7 @@ export default function AdminProfile() {
             </div>
           </div>
 
-          {/* Performance Stats */}
+          
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {performanceStats.map((stat, index) => (
               <div 
@@ -169,7 +168,7 @@ export default function AdminProfile() {
           </div>
         </div>
 
-        {/* Success Message */}
+        
         {showSuccess && (
           <div className="mb-6 p-4 bg-gradient-to-r from-emerald-900/20 to-emerald-800/10 border border-emerald-700/30 rounded-2xl flex items-center gap-4 animate-fade-in backdrop-blur-sm">
             <div className="p-2 bg-emerald-900/40 rounded-lg">
@@ -189,10 +188,10 @@ export default function AdminProfile() {
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Left Column - Profile Card */}
+         
           <div className="lg:col-span-1">
             <div className="bg-gradient-to-b from-slate-800/30 to-slate-900/30 backdrop-blur-sm rounded-3xl border border-slate-700/30 p-6 sticky top-8 shadow-xl">
-              {/* Profile Image */}
+              
               <div className="relative mb-8">
                 <div className="w-48 h-48 mx-auto rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border-2 border-slate-700/50 shadow-2xl overflow-hidden group relative">
                   {profileImage ? (
@@ -211,13 +210,13 @@ export default function AdminProfile() {
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
-                  {/* Online Status */}
+                  
                   <div className="absolute top-4 right-4">
                     <div className="w-3 h-3 bg-emerald-400 rounded-full animate-pulse ring-2 ring-emerald-400/30 ring-offset-2 ring-offset-slate-900"></div>
                   </div>
                 </div>
                 
-                {/* Upload Button */}
+                
                 <label className="absolute bottom-4 right-1/2 transform translate-x-1/2 cursor-pointer">
                   <div className="p-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full shadow-lg hover:shadow-xl hover:from-blue-600 hover:to-cyan-600 transition-all duration-300 group shadow-blue-500/25">
                     <Upload className="w-5 h-5 text-white group-hover:rotate-12 transition-transform" />
@@ -231,7 +230,7 @@ export default function AdminProfile() {
                 </label>
               </div>
 
-              {/* User Info */}
+              
               <div className="text-center mb-8">
                 <h2 className="text-2xl font-bold text-white mb-2">{profile.name}</h2>
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-full border border-blue-500/20 mb-3">
@@ -244,7 +243,7 @@ export default function AdminProfile() {
                 </div>
               </div>
 
-              {/* Contact Info */}
+             
               <div className="space-y-3 mb-8">
                 <div className="flex items-center gap-3 p-3 bg-slate-800/20 rounded-xl hover:bg-slate-800/30 transition-colors">
                   <div className="p-2 bg-slate-800/40 rounded-lg">
@@ -267,7 +266,7 @@ export default function AdminProfile() {
                 </div>
               </div>
 
-              {/* Join Date */}
+              
               <div className="p-4 bg-gradient-to-r from-slate-800/20 to-slate-900/20 rounded-2xl border border-slate-700/30">
                 <div className="flex items-center justify-between">
                   <div>
@@ -281,9 +280,9 @@ export default function AdminProfile() {
             </div>
           </div>
 
-          {/* Right Column - Main Content */}
+          
           <div className="lg:col-span-3">
-            {/* Tab Navigation */}
+           
             <div className="flex space-x-1 p-1 bg-slate-800/20 backdrop-blur-sm rounded-2xl border border-slate-700/30 mb-8 shadow-inner">
               {[
                 { id: "personal", label: "Personal", icon: User },
@@ -308,7 +307,7 @@ export default function AdminProfile() {
               ))}
             </div>
 
-            {/* Personal Information Tab */}
+            
             {activeTab === "personal" && (
               <div className="space-y-8">
                 <div className="bg-gradient-to-b from-slate-800/20 to-slate-900/20 backdrop-blur-sm rounded-3xl border border-slate-700/30 overflow-hidden shadow-xl">
@@ -432,7 +431,7 @@ export default function AdminProfile() {
                   </div>
                 </div>
 
-                {/* Access Levels */}
+              
                 <div className="bg-gradient-to-b from-slate-800/20 to-slate-900/20 backdrop-blur-sm rounded-3xl border border-slate-700/30 p-8 shadow-xl">
                   <h4 className="font-bold text-white mb-6 flex items-center gap-3">
                     <div className="p-2 bg-blue-500/20 rounded-lg">
@@ -467,7 +466,7 @@ export default function AdminProfile() {
               </div>
             )}
 
-            {/* Activity Tab */}
+           
             {activeTab === "activity" && (
               <div className="bg-gradient-to-b from-slate-800/20 to-slate-900/20 backdrop-blur-sm rounded-3xl border border-slate-700/30 p-8 shadow-xl">
                 <h3 className="text-xl font-bold text-white mb-8 flex items-center gap-3">
@@ -518,7 +517,7 @@ export default function AdminProfile() {
               </div>
             )}
 
-            {/* Preferences Tab */}
+           
             {activeTab === "preferences" && (
               <div className="bg-gradient-to-b from-slate-800/20 to-slate-900/20 backdrop-blur-sm rounded-3xl border border-slate-700/30 p-8 shadow-xl">
                 <h3 className="text-xl font-bold text-white mb-8 flex items-center gap-3">
@@ -567,11 +566,10 @@ export default function AdminProfile() {
           </div>
         </div>
 
-        {/* Footer */}
+        
         <div className="mt-12 pt-8 border-t border-slate-800/30">
           <div className="flex flex-col md:flex-row justify-between items-center text-slate-500 text-sm">
             <div>
-              {/* © 2024 TechCorp Systems. All rights reserved. */}
             </div>
             <div className="flex items-center gap-6 mt-4 md:mt-0">
               <span className="flex items-center gap-2">

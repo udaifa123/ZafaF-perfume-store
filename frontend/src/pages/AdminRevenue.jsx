@@ -31,7 +31,6 @@ export default function Revenue() {
     <div className="p-6 min-h-screen bg-gray-100">
       <h1 className="text-2xl font-bold mb-6">My Orders & Spending</h1>
 
-      {/* SUMMARY */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
         <div className="bg-white p-6 rounded shadow">
           <ShoppingBag className="text-blue-500 mb-2" />
@@ -56,7 +55,6 @@ export default function Revenue() {
         </div>
       </div>
 
-      {/* ORDERS TABLE */}
       <div className="bg-white rounded shadow overflow-x-auto">
         <table className="w-full">
           <thead className="bg-gray-200">

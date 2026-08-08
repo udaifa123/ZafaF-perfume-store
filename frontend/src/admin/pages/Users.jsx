@@ -217,7 +217,6 @@ export default function Users() {
           </div>
         </div>
 
-        {/* Stats Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <div className="bg-gray-900 rounded-xl p-5 border border-gray-800">
             <div className="flex items-center justify-between">
@@ -278,10 +277,8 @@ export default function Users() {
           </div>
         </div>
 
-        {/* Toolbar */}
         <div className="bg-gray-900 rounded-xl border border-gray-800 p-4 mb-6">
           <div className="flex flex-col lg:flex-row gap-4">
-            {/* Search */}
             <div className="flex-1">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
@@ -295,7 +292,6 @@ export default function Users() {
               </div>
             </div>
 
-            {/* Filters */}
             <div className="flex flex-wrap gap-3">
               <div className="relative">
                 <select
@@ -322,7 +318,6 @@ export default function Users() {
             </div>
           </div>
 
-          {/* Bulk Actions */}
           {selectedUsers.length > 0 && (
             <div className="mt-4 pt-4 border-t border-gray-800">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -362,7 +357,6 @@ export default function Users() {
           )}
         </div>
 
-        {/* Users Table */}
         <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
           {loading ? (
             <div className="flex items-center justify-center py-20">
@@ -535,44 +529,7 @@ export default function Users() {
                               {activeMenu === user._id && (
                                 <div className="dropdown-menu absolute right-0 mt-1 w-48 bg-gray-800 rounded-lg shadow-lg border border-gray-700 z-10">
                                   <div className="py-1">
-                                    {/* <button
-                                      onClick={() => handleViewUser(user)}
-                                      className="flex items-center w-full px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-700 transition-colors"
-                                    >
-                                      <Eye className="w-4 h-4 mr-3" />
-                                      View Details
-                                    </button> */}
-                                    {/* <button
-                                      onClick={() => {
-                                        // Edit functionality
-                                        setActiveMenu(null);
-                                      }}
-                                      className="flex items-center w-full px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-700 transition-colors"
-                                    >
-                                      <Edit3 className="w-4 h-4 mr-3" />
-                                      Edit User
-                                    </button> */}
-                                    {/* <div className="border-t border-gray-700 my-1"></div>
-                                    <button
-                                      onClick={() => user.isBlocked ? unblockUser(user._id) : blockUser(user._id)}
-                                      className={`flex items-center w-full px-4 py-2.5 text-sm transition-colors ${
-                                        user.isBlocked
-                                          ? 'text-green-400 hover:bg-gray-700'
-                                          : 'text-orange-400 hover:bg-gray-700'
-                                      }`}
-                                    >
-                                      {user.isBlocked ? (
-                                        <>
-                                          <Shield className="w-4 h-4 mr-3" />
-                                          Unblock User
-                                        </>
-                                      ) : (
-                                        <>
-                                          <ShieldOff className="w-4 h-4 mr-3" />
-                                          Block User
-                                        </>
-                                      )}
-                                    </button> */}
+                                   
                                     <button
                                       onClick={() => deleteUser(user._id)}
                                       className="flex items-center w-full px-4 py-2.5 text-sm text-red-400 hover:bg-gray-700 transition-colors"
@@ -594,7 +551,6 @@ export default function Users() {
             </div>
           )}
 
-          {/* Table Footer */}
           {filteredUsers.length > 0 && (
             <div className="border-t border-gray-800 px-6 py-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between">
@@ -613,11 +569,9 @@ export default function Users() {
         </div>
       </main>
 
-      {/* User Details Modal */}
       {showUserDetails && selectedUser && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
           <div className="bg-gray-900 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden border border-gray-800">
-            {/* Modal Header */}
             <div className="flex items-center justify-between p-6 border-b border-gray-800">
               <div className="flex items-center">
                 <div className="p-2 bg-blue-900/30 rounded-lg mr-3">
@@ -636,9 +590,7 @@ export default function Users() {
               </button>
             </div>
 
-            {/* Modal Content */}
             <div className="p-6 overflow-y-auto max-h-[calc(90vh-140px)]">
-              {/* User Header */}
               <div className="flex items-center mb-8 pb-6 border-b border-gray-800">
                 <div className="flex-shrink-0 h-20 w-20 bg-gradient-to-br from-blue-900/50 to-blue-800/50 rounded-full flex items-center justify-center mr-4">
                   {selectedUser.avatar ? (
@@ -677,7 +629,6 @@ export default function Users() {
                 </div>
               </div>
 
-              {/* User Information Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-6">
                   <div>
@@ -739,7 +690,6 @@ export default function Users() {
                 </div>
               </div>
 
-              {/* Additional Information */}
               {selectedUser.bio && (
                 <div className="mt-8 pt-6 border-t border-gray-800">
                   <h4 className="text-sm font-medium text-gray-500 mb-3">About</h4>
@@ -747,30 +697,9 @@ export default function Users() {
                 </div>
               )}
 
-              {/* Stats */}
-              {/* <div className="mt-8 grid grid-cols-3 gap-4">
-                <div className="bg-gray-800 rounded-lg p-4">
-                  <p className="text-sm font-medium text-gray-400">Orders</p>
-                  <p className="text-2xl font-bold text-white mt-1">
-                    {selectedUser.orderCount || 0}
-                  </p>
-                </div>
-                <div className="bg-gray-800 rounded-lg p-4">
-                  <p className="text-sm font-medium text-gray-400">Reviews</p>
-                  <p className="text-2xl font-bold text-white mt-1">
-                    {selectedUser.reviewCount || 0}
-                  </p>
-                </div>
-                <div className="bg-gray-800 rounded-lg p-4">
-                  <p className="text-sm font-medium text-gray-400">Total Spent</p>
-                  <p className="text-2xl font-bold text-white mt-1">
-                    ${selectedUser.totalSpent || '0.00'}
-                  </p>
-                </div>
-              </div> */}
+             
             </div>
 
-            {/* Modal Footer */}
             <div className="border-t border-gray-800 p-6">
               <div className="flex justify-end gap-3">
                 <button
@@ -779,25 +708,7 @@ export default function Users() {
                 >
                   Close
                 </button>
-                {/* <button
-                  onClick={() => selectedUser.isBlocked ? unblockUser(selectedUser._id) : blockUser(selectedUser._id)}
-                  className={`px-5 py-2.5 rounded-lg text-white transition-all ${
-                    selectedUser.isBlocked
-                      ? 'bg-green-600 hover:bg-green-700'
-                      : 'bg-orange-600 hover:bg-orange-700'
-                  }`}
-                >
-                  {selectedUser.isBlocked ? 'Unblock User' : 'Block User'}
-                </button> */}
-                {/* <button
-                  onClick={() => {
-                    deleteUser(selectedUser._id);
-                    setShowUserDetails(false);
-                  }}
-                  className="px-5 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all"
-                >
-                  Delete User
-                </button> */}
+               
               </div>
             </div>
           </div>

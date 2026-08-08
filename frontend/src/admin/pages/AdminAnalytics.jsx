@@ -56,7 +56,7 @@ export default function AdminAnalytics() {
           pendingOrders: data.pendingOrders,
         });
 
-        /* MONTHLY REVENUE */
+       
         const months = Array(12).fill(0);
         data.monthlyRevenue.forEach((m) => {
           months[m._id - 1] = m.total;
@@ -112,19 +112,15 @@ export default function AdminAnalytics() {
         <Activity /> Admin Analytics
       </h1>
 
-      {/* STATS */}
+      
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <StatCard label="Users" value={stats.totalUsers} trend="up" />
         <StatCard label="Orders" value={stats.totalOrders} trend="up" />
-        {/* <StatCard
-          label="Revenue"
-          value={`₹${stats.totalRevenue.toLocaleString()}`}
-          trend="up"
-        /> */}
+       
         <StatCard label="Pending" value={stats.pendingOrders} trend="down" />
       </div>
 
-      {/* CHARTS */}
+      
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="bg-gray-800 p-6 rounded-xl">
           <h2 className="text-xl mb-4">Monthly Revenue</h2>

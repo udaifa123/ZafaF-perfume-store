@@ -17,7 +17,7 @@ exports.userRegister = async (req, res) => {
   const user = await User.create({
     name,
     email,
-    password, // 🔥 hashing happens in User model (pre save)
+    password, // hashing happens in User model (pre save)
     isAdmin: false,
   });
 
@@ -31,13 +31,13 @@ exports.userRegister = async (req, res) => {
 exports.userLogin = async (req, res) => {
   const { email, password } = req.body;
 
-  // ❌ role removed → using isAdmin
+  //  role removed → using isAdmin
   const user = await User.findOne({ email, isAdmin: false });
   if (!user) {
     return res.status(401).json({ message: "Invalid credentials" });
   }
 
-  // 🔴 BLOCK CHECK
+  //  BLOCK CHECK
   if (user.isBlocked === true) {
     return res.status(403).json({
       message: "Your account is blocked. Please contact admin.",
@@ -72,7 +72,7 @@ exports.changePassword = async (req, res) => {
       return res.status(400).json({ message: "Current password is wrong" });
     }
 
-    user.password = newPassword; // 🔥 auto hashed by pre-save
+    user.password = newPassword; //  auto hashed by pre-save
     await user.save();
 
     res.json({ message: "Password changed successfully" });

@@ -12,7 +12,7 @@ const { protectUser } = require("../middleware/authMiddleware");
 router.post("/register", userRegister);
 router.post("/login", userLogin);
 
-// ✅ FIXED LINE
+
 router.put("/change-password", protectUser, changePassword);
 
 module.exports = router;

@@ -33,7 +33,7 @@ const orderSchema = new mongoose.Schema(
       required: true,
     },
 
-    /* ✅ PAYMENT */
+    /*  PAYMENT */
     paymentMethod: {
       type: String,
       enum: ["COD", "PAYPAL"],
@@ -77,7 +77,7 @@ const orderSchema = new mongoose.Schema(
       pincode: String,
     },
 
-    /* ✅ PAYPAL RESULT */
+    /*  PAYPAL RESULT */
     paymentResult: {
       id: String,
       status: String,

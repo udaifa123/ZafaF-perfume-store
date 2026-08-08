@@ -1,203 +1,3 @@
-// import { useState, useContext } from "react";
-// import API from "../api/axios";
-// import { AuthContext } from "../context/AuthContext";
-
-// export default function Login() {
-//   const [form, setForm] = useState({ email: "", password: "" });
-//   const { loginUser } = useContext(AuthContext);
-//   const [error, setError] = useState("");
-
-//   const handleChange = (e) =>
-//     setForm({ ...form, [e.target.name]: e.target.value });
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-//       const res = await API.post("/auth/login", form);
-//       loginUser(res.data);
-//     } catch (err) {
-//       setError(err.response?.data?.message || "Something went wrong");
-//     }
-//   };
-
-//   return (
-//     <div className="flex justify-center items-center h-screen bg-gray-100">
-//       <form
-//         onSubmit={handleSubmit}
-//         className="bg-white p-10 rounded-2xl shadow-xl w-full max-w-md text-center"
-//       >
-//         <h2 className="text-3xl font-bold mb-6 text-gray-800">Login</h2>
-
-//         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-
-//         <input
-//           name="email"
-//           placeholder="Email"
-//           value={form.email}
-//           onChange={handleChange}
-//           className="w-full px-5 py-3 mb-4 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-//         />
-
-//         <input
-//           type="password"
-//           name="password"
-//           placeholder="Password"
-//           value={form.password}
-//           onChange={handleChange}
-//           className="w-full px-5 py-3 mb-6 border border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-//         />
-
-//         <button
-//           type="submit"
-//           className="w-full py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors"
-//         >
-//           Login
-//         </button>
-//       </form>
-//     </div>
-//   );
-// }
-
-
-// import { useState, useContext } from "react";
-// import { Link } from "react-router-dom";
-// import API from "../api/axios";
-// import { AuthContext } from "../context/AuthContext";
-
-// export default function Login() {
-//   const [form, setForm] = useState({ email: "", password: "" });
-//   const { loginUser } = useContext(AuthContext);
-//   const [error, setError] = useState("");
-
-//   const handleChange = (e) =>
-//     setForm({ ...form, [e.target.name]: e.target.value });
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-//       const res = await API.post("/auth/login", form);
-//       loginUser(res.data, true); // 🔥 LOGIN → PRODUCTS
-//     } catch (err) {
-//       setError(err.response?.data?.message || "Login failed");
-//     }
-//   };
-
-//   return (
-//     <div className="flex justify-center items-center h-screen bg-gray-100">
-//       <form
-//         onSubmit={handleSubmit}
-//         className="bg-white p-10 rounded-xl shadow-lg w-full max-w-md text-center"
-//       >
-//         <h2 className="text-3xl font-bold mb-6">Login</h2>
-
-//         {error && <p className="text-red-500 mb-4">{error}</p>}
-
-//         <input
-//           name="email"
-//           placeholder="Email"
-//           value={form.email}
-//           onChange={handleChange}
-//           className="w-full px-4 py-3 mb-4 border rounded"
-//         />
-
-//         <input
-//           type="password"
-//           name="password"
-//           placeholder="Password"
-//           value={form.password}
-//           onChange={handleChange}
-//           className="w-full px-4 py-3 mb-6 border rounded"
-//         />
-
-//         <button className="w-full py-3 bg-blue-500 text-white rounded">
-//           Login
-//         </button>
-
-//         <p className="mt-4 text-sm text-gray-600">
-//           Don’t have an account?{" "}
-//           <Link to="/register" className="text-blue-600 font-semibold">
-//             Register
-//           </Link>
-//         </p>
-//       </form>
-//     </div>
-//   );
-// }
-
-
-
-
-// import { useState, useContext } from "react";
-// import { Link, useNavigate } from "react-router-dom";
-// import API from "../api/axios";
-// import { AuthContext } from "../context/AuthContext";
-
-// export default function Login() {
-//   const [form, setForm] = useState({ email: "", password: "" });
-//   const [error, setError] = useState("");
-//   const { loginUser } = useContext(AuthContext);
-//   const navigate = useNavigate();
-
-//   const handleChange = (e) =>
-//     setForm({ ...form, [e.target.name]: e.target.value });
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-      
-//       const res = await API.post("/users/login", form);
-
-//       loginUser(res.data);
-//       navigate("/");
-//     } catch (err) {
-//       setError(err.response?.data?.message || "Login failed");
-//     }
-//   };
-
-//   return (
-//     <div className="flex justify-center items-center h-screen bg-gray-100">
-//       <form
-//         onSubmit={handleSubmit}
-//         className="bg-white p-10 rounded-xl shadow-lg w-full max-w-md"
-//       >
-//         <h2 className="text-3xl font-bold mb-6 text-center">Login</h2>
-
-//         {error && <p className="text-red-500 mb-4">{error}</p>}
-
-//         <input
-//           name="email"
-//           placeholder="Email"
-//           onChange={handleChange}
-//           className="w-full px-4 py-3 mb-4 border rounded"
-//         />
-//         <input
-//           type="password"
-//           name="password"
-//           placeholder="Password"
-//           onChange={handleChange}
-//           className="w-full px-4 py-3 mb-6 border rounded"
-//         />
-
-//         <button className="w-full py-3 bg-blue-500 text-white rounded">
-//           Login
-//         </button>
-
-//         <p className="mt-4 text-sm text-center">
-//           No account?{" "}
-//           <Link to="/register" className="text-blue-600">
-//             Register
-//           </Link>
-//         </p>
-//       </form>
-//     </div>
-//   );
-// }
-
-
-
-
-
-
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { 
@@ -232,10 +32,8 @@ export default function Login() {
         password,
       });
 
-      // save token
       localStorage.setItem("userInfo", JSON.stringify(res.data));
 
-      // go to product list
       navigate("/products");
     } catch (err) {
   if (err.response?.status === 403 && err.response?.data?.blocked) {
@@ -255,7 +53,6 @@ finally {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-4">
       <div className="w-full max-w-md">
-        {/* Header */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             <div className="w-16 h-16 bg-black rounded-2xl flex items-center justify-center shadow-lg">
@@ -266,7 +63,6 @@ finally {
           <p className="text-gray-600">Sign in to your ZafaF account</p>
         </div>
 
-        {/* Login Card */}
         <div className="bg-white rounded-2xl shadow-xl p-8">
           {error && (
             <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl">
@@ -280,7 +76,6 @@ finally {
           )}
 
           <form onSubmit={submitHandler} className="space-y-6">
-            {/* Email Field */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Email Address
@@ -300,7 +95,6 @@ finally {
               </div>
             </div>
 
-            {/* Password Field */}
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label className="block text-sm font-medium text-gray-700">
@@ -335,7 +129,6 @@ finally {
               </div>
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={loading}
@@ -358,14 +151,12 @@ finally {
             </button>
           </form>
 
-          {/* Divider */}
           <div className="my-8 flex items-center">
             <div className="flex-1 border-t border-gray-300"></div>
             <div className="px-4 text-gray-500 text-sm">or continue with</div>
             <div className="flex-1 border-t border-gray-300"></div>
           </div>
 
-          {/* Social Login */}
           <div className="grid grid-cols-2 gap-3 mb-8">
             <button className="flex items-center justify-center gap-2 border border-gray-300 py-3 rounded-lg hover:bg-gray-50 transition-colors">
               <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -384,7 +175,6 @@ finally {
             </button>
           </div>
 
-          {/* Register Link */}
           <div className="text-center">
             <p className="text-gray-600">
               Don't have an account?{" "}
@@ -399,7 +189,6 @@ finally {
           </div>
         </div>
 
-        {/* Back to Home */}
         <div className="text-center mt-8">
           <Link
             to="/"

@@ -26,7 +26,7 @@ import {
 import { successAlert, errorAlert } from "../../utils/alert";
 
 export default function AdminSettings() {
-  // Store Settings
+  
   const [storeSettings, setStoreSettings] = useState({
     storeName: "ZafaF PERFUME",
     storeEmail: "admin@gmail.com",
@@ -38,7 +38,7 @@ export default function AdminSettings() {
     maintenanceMode: false
   });
 
-  // Payment Settings
+
   const [paymentSettings, setPaymentSettings] = useState({
     razorpayKey: "",
     razorpaySecret: "",
@@ -51,7 +51,7 @@ export default function AdminSettings() {
     enablePayPal: false
   });
 
-  // Shipping Settings
+ 
   const [shippingSettings, setShippingSettings] = useState({
     shippingEnabled: true,
     freeShippingThreshold: 999,
@@ -61,7 +61,7 @@ export default function AdminSettings() {
     estimatedDeliveryDays: "3-7"
   });
 
-  // Tax Settings
+  
   const [taxSettings, setTaxSettings] = useState({
     gstEnabled: true,
     gstRate: 18,
@@ -71,7 +71,7 @@ export default function AdminSettings() {
     taxInclusive: true
   });
 
-  // Notification Settings
+
   const [notificationSettings, setNotificationSettings] = useState({
     emailNotifications: true,
     smsNotifications: false,
@@ -83,7 +83,7 @@ export default function AdminSettings() {
     lowStockAlerts: true
   });
 
-  // Security Settings
+
   const [securitySettings, setSecuritySettings] = useState({
     twoFactorAuth: false,
     loginAttempts: 5,
@@ -93,7 +93,7 @@ export default function AdminSettings() {
     sslEnabled: true
   });
 
-  // Appearance Settings
+  
   const [appearanceSettings, setAppearanceSettings] = useState({
     theme: "dark",
     primaryColor: "#6366f1",
@@ -103,7 +103,7 @@ export default function AdminSettings() {
     enableAnimations: true
   });
 
-  // API Settings
+  
   const [apiSettings, setApiSettings] = useState({
     apiEnabled: true,
     rateLimit: 100,
@@ -112,7 +112,7 @@ export default function AdminSettings() {
     enableLogging: true
   });
 
-  // Advanced Settings
+ 
   const [advancedSettings, setAdvancedSettings] = useState({
     cacheEnabled: true,
     cdnEnabled: false,
@@ -122,18 +122,14 @@ export default function AdminSettings() {
     enableDebug: false
   });
 
-  // const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("general");
   const [showSecretKeys, setShowSecretKeys] = useState({});
   const [saving, setSaving] = useState(false);
 
-  // Load settings on component mount
   useEffect(() => {
-    // In real app, fetch from API
     const savedSettings = localStorage.getItem("adminSettings");
     if (savedSettings) {
       const parsed = JSON.parse(savedSettings);
-      // Update each settings object with saved data
       Object.keys(parsed).forEach(key => {
         if (key === "storeSettings") setStoreSettings(parsed[key]);
         if (key === "paymentSettings") setPaymentSettings(parsed[key]);
@@ -151,7 +147,6 @@ export default function AdminSettings() {
   const handleSaveSettings = async () => {
     setSaving(true);
     try {
-      // Save all settings to localStorage (in real app, send to API)
       const allSettings = {
         storeSettings,
         paymentSettings,
@@ -166,7 +161,6 @@ export default function AdminSettings() {
       
       localStorage.setItem("adminSettings", JSON.stringify(allSettings));
       
-      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       successAlert("Settings Saved", "All settings have been saved successfully!");
@@ -179,7 +173,6 @@ export default function AdminSettings() {
 
   const handleResetSettings = () => {
     if (window.confirm("Are you sure you want to reset all settings to default?")) {
-      // Reset to default values
       setStoreSettings({
         storeName: "ZafaF PERFUME",
         storeEmail: "admin@gmail.com",
@@ -203,14 +196,7 @@ export default function AdminSettings() {
     }));
   };
 
-  // const formatCurrency = (amount) => {
-  //   return new Intl.NumberFormat('en-IN', {
-  //     style: 'currency',
-  //     currency: storeSettings.currency,
-  //     minimumFractionDigits: 0,
-  //     maximumFractionDigits: 0
-  //   }).format(amount);
-  // };
+ 
 
   const settingsTabs = [
     { id: "general", label: "General", icon: Settings },
@@ -220,14 +206,12 @@ export default function AdminSettings() {
     { id: "notifications", label: "Notifications", icon: Bell },
     { id: "security", label: "Security", icon: Shield },
     { id: "appearance", label: "Appearance", icon: Palette },
-    // { id: "api", label: "API", icon: Database },
     { id: "advanced", label: "Advanced", icon: Server }
   ];
 
   return (
     <div className="min-h-screen bg-gray-900 via-black to-gray-900">
       <div className="p-6 lg:p-8">
-        {/* Header */}
         <div className="mb-8">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
@@ -272,9 +256,7 @@ export default function AdminSettings() {
           </div>
         </div>
 
-        {/* Settings Container */}
         <div className="bg-gradient-to-br from-gray-800/30 to-gray-900/30 backdrop-blur-sm rounded-2xl border border-gray-700/50 overflow-hidden">
-          {/* Tabs */}
           <div className="flex overflow-x-auto border-b border-gray-700/50">
             {settingsTabs.map((tab) => (
               <button
@@ -295,9 +277,7 @@ export default function AdminSettings() {
             ))}
           </div>
 
-          {/* Tab Content */}
           <div className="p-6">
-            {/* General Settings */}
             {activeTab === "general" && (
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -431,7 +411,6 @@ export default function AdminSettings() {
               </div>
             )}
 
-            {/* Payment Settings */}
             {activeTab === "payments" && (
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -562,7 +541,6 @@ export default function AdminSettings() {
               </div>
             )}
 
-            {/* Shipping Settings */}
             {activeTab === "shipping" && (
               <div className="space-y-6">
                 <div className="flex items-center justify-between p-4 bg-gray-800/30 rounded-xl border border-gray-700/50">
@@ -659,7 +637,6 @@ export default function AdminSettings() {
               </div>
             )}
 
-            {/* Tax Settings */}
             {activeTab === "tax" && (
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -759,7 +736,6 @@ export default function AdminSettings() {
               </div>
             )}
 
-            {/* Notifications Settings */}
             {activeTab === "notifications" && (
               <div className="space-y-4">
                 <h3 className="text-lg font-bold text-white mb-4">Notification Preferences</h3>
@@ -867,7 +843,6 @@ export default function AdminSettings() {
               </div>
             )}
 
-            {/* Security Settings */}
             {activeTab === "security" && (
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -970,9 +945,7 @@ export default function AdminSettings() {
               </div>
             )}
 
-            {/* Other tabs will follow similar pattern */}
             
-            {/* Save Button at Bottom */}
             <div className="mt-8 pt-6 border-t border-gray-700/50">
               <div className="flex justify-end">
                 <button
@@ -997,7 +970,7 @@ export default function AdminSettings() {
           </div>
         </div>
 
-        {/* Footer */}
+       
         <div className="mt-8 text-center text-gray-500 text-sm">
           <p>Settings last saved: {new Date().toLocaleString()}</p>
         </div>

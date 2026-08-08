@@ -1,9 +1,6 @@
-// PayPal utility functions
-
-// Load PayPal SDK dynamically
 export const loadPayPalScript = () => {
   return new Promise((resolve, reject) => {
-    // Check if PayPal script is already loaded
+    
     if (window.paypal) {
       resolve(window.paypal);
       return;
@@ -29,15 +26,15 @@ export const loadPayPalScript = () => {
   });
 };
 
-// Convert INR to USD for PayPal
+
 export const formatAmountForPayPal = (amountInINR) => {
-  // Approximate conversion rate (update with real rate if needed)
-  const exchangeRate = 0.012; // 1 INR = 0.012 USD
+
+  const exchangeRate = 0.012; 
   const amountInUSD = (amountInINR * exchangeRate).toFixed(2);
   return parseFloat(amountInUSD);
 };
 
-// Create PayPal order
+
 export const createPayPalOrder = async (amount, items, shippingAddress) => {
   try {
     const response = await fetch('http://localhost:5000/api/paypal/create-order', {
@@ -65,7 +62,7 @@ export const createPayPalOrder = async (amount, items, shippingAddress) => {
   }
 };
 
-// Capture PayPal payment
+
 export const capturePayPalPayment = async (orderID) => {
   try {
     const response = await fetch('http://localhost:5000/api/paypal/capture-order', {

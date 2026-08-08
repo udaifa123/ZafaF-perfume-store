@@ -1,57 +1,3 @@
-// import { useEffect, useState } from "react";
-// import API from "../api/axios";
-
-// function Wishlist() {
-//   const [wishlist, setWishlist] = useState([]);
-
-//   useEffect(() => {
-//     API.get("/wishlist", {
-//       headers: {
-//         Authorization: `Bearer ${localStorage.getItem("token")}`,
-//       },
-//     })
-//       .then((res) => setWishlist(res.data))
-//       .catch((err) => console.error(err));
-//   }, []);
-
-//   const removeFromWishlist = async (id) => {
-//     await API.delete(`/wishlist/${id}`, {
-//       headers: {
-//         Authorization: `Bearer ${localStorage.getItem("token")}`,
-//       },
-//     });
-
-//     setWishlist((prev) => prev.filter((item) => item._id !== id));
-//   };
-
-//   return (
-//     <div>
-//       <h1>Wishlist</h1>
-
-//       {wishlist.length === 0 ? (
-//         <p>Your wishlist is empty</p>
-//       ) : (
-//         wishlist.map((item) => (
-//           <div key={item._id}>
-//             <h3>{item.product?.name}</h3>
-//             <p>₹{item.product?.price}</p>
-//             <button onClick={() => removeFromWishlist(item._id)}>
-//               Remove
-//             </button>
-//           </div>
-//         ))
-//       )}
-//     </div>
-//   );
-// }
-
-// export default Wishlist;
-
-
-
-
-
-
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import API from "../api/axios";
@@ -86,7 +32,7 @@ export default function Wishlist() {
 
   const fetchWishlist = async () => {
     try {
-      const res = await API.get("/wishlist"); // ✅ NO HEADERS
+      const res = await API.get("/wishlist"); 
       setWishlistItems(res.data);
     } catch (error) {
       console.error(error);
@@ -126,19 +72,16 @@ const addToCart = async (wishlistId, productId, productName) => {
   try {
     const token = localStorage.getItem("token");
 
-    // 1️⃣ Add to cart
     await API.post(
       "/cart",
       { productId, quantity: 1 },
       { headers: { Authorization: `Bearer ${token}` } }
     );
 
-    // 2️⃣ Remove from wishlist
     await API.delete(`/wishlist/${wishlistId}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
 
-    // 3️⃣ Update UI
     setWishlistItems(prev =>
       prev.filter(item => item._id !== wishlistId)
     );
@@ -195,7 +138,6 @@ const addToCart = async (wishlistId, productId, productName) => {
     try {
       const token = localStorage.getItem("token");
       
-      // Add all to cart
       const cartPromises = wishlistItems.map(item =>
         API.post("/cart", 
           { productId: item.product._id, quantity: 1 },
@@ -203,7 +145,6 @@ const addToCart = async (wishlistId, productId, productName) => {
         )
       );
 
-      // Remove all from wishlist
       const wishlistPromises = wishlistItems.map(item =>
         API.delete(`/wishlist/${item._id}`, {
           headers: { Authorization: `Bearer ${token}` }
@@ -235,7 +176,6 @@ const addToCart = async (wishlistId, productId, productName) => {
   if (wishlistItems.length === 0) {
     return (
       <div className="min-h-screen bg-white">
-        {/* Header */}
         <div className="border-b border-gray-100">
           <div className="max-w-7xl mx-auto px-6 py-8">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
@@ -258,7 +198,6 @@ const addToCart = async (wishlistId, productId, productName) => {
           </div>
         </div>
 
-        {/* Empty State */}
         <div className="flex flex-col items-center justify-center py-24 px-6">
           <div className="w-32 h-32 bg-pink-50 rounded-full flex items-center justify-center mb-8">
             <Heart className="w-16 h-16 text-pink-300" />
@@ -280,7 +219,6 @@ const addToCart = async (wishlistId, productId, productName) => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
       <div className="border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6 py-10">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
@@ -313,10 +251,8 @@ const addToCart = async (wishlistId, productId, productName) => {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Wishlist Items */}
           <div className="lg:col-span-2">
             <div className="space-y-6">
               {wishlistItems.map((item) => (
@@ -325,7 +261,6 @@ const addToCart = async (wishlistId, productId, productName) => {
                   className="border border-gray-200 bg-white hover:shadow-md transition-all duration-300 group"
                 >
                   <div className="flex flex-col md:flex-row">
-                    {/* Product Image */}
                     <div className="md:w-48 lg:w-56 bg-gray-50 relative overflow-hidden">
                       <Link to={`/product/${item.product._id}`}>
                         <img
@@ -346,7 +281,6 @@ const addToCart = async (wishlistId, productId, productName) => {
                       </button>
                     </div>
 
-                    {/* Product Details */}
                     <div className="flex-1 p-6">
                       <div className="flex flex-col h-full">
                         <div className="mb-4">
@@ -424,7 +358,6 @@ const addToCart = async (wishlistId, productId, productName) => {
               ))}
             </div>
 
-            {/* Summary */}
             <div className="mt-10 pt-8 border-t border-gray-200">
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div className="text-sm text-gray-500">
@@ -441,10 +374,8 @@ const addToCart = async (wishlistId, productId, productName) => {
             </div>
           </div>
 
-          {/* Sidebar - Quick Stats & Actions */}
           <div className="lg:col-span-1">
             <div className="sticky top-6 space-y-6">
-              {/* Wishlist Summary */}
               <div className="border border-gray-200 p-6">
                 <h3 className="text-sm font-medium text-gray-900 tracking-wider uppercase mb-4">
                   WISHLIST SUMMARY
@@ -469,7 +400,6 @@ const addToCart = async (wishlistId, productId, productName) => {
                 </div>
               </div>
 
-              {/* Quick Actions */}
               <div className="border border-gray-200 p-6">
                 <h3 className="text-sm font-medium text-gray-900 tracking-wider uppercase mb-4">
                   QUICK ACTIONS
@@ -499,7 +429,6 @@ const addToCart = async (wishlistId, productId, productName) => {
                 </div>
               </div>
 
-              {/* Recently Viewed (Optional - can be fetched from localStorage) */}
               <div className="border border-gray-200 p-6">
                 <h3 className="text-sm font-medium text-gray-900 tracking-wider uppercase mb-4">
                   TIPS

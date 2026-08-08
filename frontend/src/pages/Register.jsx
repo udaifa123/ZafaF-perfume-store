@@ -1,158 +1,3 @@
-// import { useState, useContext } from "react";
-// import { Link } from "react-router-dom";
-// import API from "../api/axios";
-// import { AuthContext } from "../context/AuthContext";
-
-// export default function Register() {
-//   const { loginUser } = useContext(AuthContext);
-//   const [form, setForm] = useState({ name: "", email: "", password: "" });
-//   const [error, setError] = useState("");
-
-//   const handleChange = (e) =>
-//     setForm({ ...form, [e.target.name]: e.target.value });
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-//       const res = await API.post("/auth/register", form);
-//       loginUser(res.data); 
-//     } catch (err) {
-//       setError(err.response?.data?.message || "Register failed");
-//     }
-//   };
-
-//   return (
-//     <div className="flex justify-center items-center h-screen bg-gray-100">
-//       <form
-//         onSubmit={handleSubmit}
-//         className="bg-white p-10 rounded-xl shadow-lg w-full max-w-md text-center"
-//       >
-//         <h2 className="text-3xl font-bold mb-6">Register</h2>
-
-//         {error && <p className="text-red-500 mb-4">{error}</p>}
-
-//         <input
-//           name="name"
-//           placeholder="Name"
-//           value={form.name}
-//           onChange={handleChange}
-//           className="w-full px-4 py-3 mb-4 border rounded"
-//         />
-
-//         <input
-//           name="email"
-//           placeholder="Email"
-//           value={form.email}
-//           onChange={handleChange}
-//           className="w-full px-4 py-3 mb-4 border rounded"
-//         />
-
-//         <input
-//           type="password"
-//           name="password"
-//           placeholder="Password"
-//           value={form.password}
-//           onChange={handleChange}
-//           className="w-full px-4 py-3 mb-6 border rounded"
-//         />
-
-//         <button className="w-full py-3 bg-green-500 text-white rounded">
-//           Register
-//         </button>
-
-//         <p className="mt-4 text-sm text-gray-600">
-//           Already have an account?{" "}
-//           <Link to="/login" className="text-green-600 font-semibold">
-//             Login
-//           </Link>
-//         </p>
-//       </form>
-//     </div>
-//   );
-// }
-
-
-
-// import { useState, useContext } from "react";
-// import { Link, useNavigate } from "react-router-dom";
-// import API from "../api/axios";
-// import { AuthContext } from "../context/AuthContext";
-
-// export default function Register() {
-//   const [form, setForm] = useState({
-//     name: "",
-//     email: "",
-//     password: "",
-//   });
-//   const [error, setError] = useState("");
-//   const { loginUser } = useContext(AuthContext);
-//   const navigate = useNavigate();
-
-//   const handleChange = (e) =>
-//     setForm({ ...form, [e.target.name]: e.target.value });
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-      
-//       const res = await API.post("/users/register", form);
-
-//       loginUser(res.data); // token + user
-//       navigate("/");
-//     } catch (err) {
-//       setError(err.response?.data?.message || "Register failed");
-//     }
-//   };
-
-//   return (
-//     <div className="flex justify-center items-center h-screen bg-gray-100">
-//       <form
-//         onSubmit={handleSubmit}
-//         className="bg-white p-10 rounded-xl shadow-lg w-full max-w-md"
-//       >
-//         <h2 className="text-3xl font-bold mb-6 text-center">Register</h2>
-
-//         {error && <p className="text-red-500 mb-4">{error}</p>}
-
-//         <input
-//           name="name"
-//           placeholder="Name"
-//           onChange={handleChange}
-//           className="w-full px-4 py-3 mb-4 border rounded"
-//         />
-//         <input
-//           name="email"
-//           placeholder="Email"
-//           onChange={handleChange}
-//           className="w-full px-4 py-3 mb-4 border rounded"
-//         />
-//         <input
-//           type="password"
-//           name="password"
-//           placeholder="Password"
-//           onChange={handleChange}
-//           className="w-full px-4 py-3 mb-6 border rounded"
-//         />
-
-//         <button className="w-full py-3 bg-green-500 text-white rounded">
-//           Register
-//         </button>
-
-//         <p className="mt-4 text-sm text-center">
-//           Already have account?{" "}
-//           <Link to="/login" className="text-green-600">
-//             Login
-//           </Link>
-//         </p>
-//       </form>
-//     </div>
-//   );
-// }
-
-
-
-
-
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API from "../api/axios";
@@ -193,7 +38,6 @@ export default function Register() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 px-4 py-12">
       <div className="w-full max-w-md">
-        {/* Logo/Brand Section */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl mb-4 shadow-lg">
             <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -204,10 +48,8 @@ export default function Register() {
           <p className="text-gray-600">Join us today and get started</p>
         </div>
 
-        {/* Form Card */}
         <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Error Message */}
             {error && (
               <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-start gap-3">
                 <svg className="w-5 h-5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
@@ -217,7 +59,6 @@ export default function Register() {
               </div>
             )}
 
-            {/* Name Input */}
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                 Full Name
@@ -241,7 +82,6 @@ export default function Register() {
               </div>
             </div>
 
-            {/* Email Input */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                 Email Address
@@ -265,7 +105,6 @@ export default function Register() {
               </div>
             </div>
 
-            {/* Password Input */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
                 Password
@@ -290,7 +129,6 @@ export default function Register() {
               <p className="mt-2 text-xs text-gray-500">Must be at least 8 characters long</p>
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={loading}
@@ -310,7 +148,6 @@ export default function Register() {
             </button>
           </form>
 
-          {/* Divider */}
           <div className="mt-6 mb-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
@@ -322,7 +159,6 @@ export default function Register() {
             </div>
           </div>
 
-          {/* Login Link */}
           <div className="text-center">
             <Link
               to="/login"
@@ -336,7 +172,6 @@ export default function Register() {
           </div>
         </div>
 
-        {/* Footer */}
         <p className="text-center text-xs text-gray-500 mt-6">
           By signing up, you agree to our{" "}
           <a href="#" className="text-emerald-600 hover:text-emerald-700">Terms</a>

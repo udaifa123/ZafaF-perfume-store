@@ -9,14 +9,14 @@ export default function PayPalButton({ amount, cartItems, shippingAddress, onSuc
       { amount, cartItems, shippingAddress },
       { headers: { Authorization: `Bearer ${token}` } }
     );
-    return res.data.orderID; // must return orderID
+    return res.data.orderID; 
   };
 
 const onApprove = async (data) => {
   try {
     const token = localStorage.getItem("token");
     const res = await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/paypal/capture-order/${data.orderID}`, // <--- use URL param
+      `${import.meta.env.VITE_API_URL}/api/paypal/capture-order/${data.orderID}`, 
       {},
       { headers: { Authorization: `Bearer ${token}` } }
     );

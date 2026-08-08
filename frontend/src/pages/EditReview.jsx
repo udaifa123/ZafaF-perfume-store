@@ -16,7 +16,6 @@ export default function EditReview() {
     try {
       const res = await API.get(`/reviews/review/${reviewId}`);
 
-      // check ownership
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
       if (!userInfo || userInfo.user._id !== res.data.user._id) {
         errorAlert("Unauthorized", "You cannot edit this review");
